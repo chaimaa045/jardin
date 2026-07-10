@@ -1,0 +1,447 @@
+{
+  "Index": {
+    "title": "Souss Garden"
+  },
+  
+
+  "Header": {
+    "nav": {
+      "home": "Accueil",
+      "shop": "Boutique",
+      "services": "Services",
+      "portfolio": "Réalisations",
+      "about": "À Propos",
+      "contact": "Contact"
+    },
+    "buttons": {
+      "switch_ar": "AR",
+      "switch_fr": "FR",
+      "switch_ar_mobile": "Passer en Arabe (AR)",
+      "switch_fr_mobile": "Passer en Français (FR)",
+      "quote": "Devis Gratuit",
+      "quote_mobile": "Demander un devis"
+    }
+  },
+
+
+  "About": {
+    "hero": {
+      "title": "À Propos de Moi",
+      "shortBio": "Passionné par les merveilles de la nature, je mets mon expertise au service de vos espaces verts pour créer des paysages uniques et harmonieux."
+    },
+    "whoAmI": {
+      "title": "Qui suis-je ?",
+
+      "p1": "Je suis <bold>ABDELOUAHED FAKRI</bold>, un <bold>professionnel paysagiste très passionné</bold>, amoureux des merveilles de la nature. Né le 09-03-1966 à Fès, j’ai obtenu un <bold>baccalauréat en Sciences Expérimentales (Français) en 1988 à Taroudant</bold>.",
+      "p2": "De plus, je suis <bold>diplômé du Collège de Technologie Agricole et Alimentaire d’Alfred, Ontario (Canada) en 1992</bold>. C’est sans doute là-bas que j’ai acquis ma première expérience et que j’ai réalisé à quel point la Nature est belle et importante à mes yeux, et combien elle l’est pour nous tous. J'ai toujours été fasciné par la beauté de notre planète et je suis convaincu que nous devons nous engager à la conserver.",
+      "p3": "J’ai <bold>quitté le Canada pour revenir au Maroc</bold> afin de réaliser mon rêve : <bold>créer une entreprise personnelle dans ce domaine</bold>.",
+      "p4": "Au cours de mon parcours, j'ai cumulé une <bold>expérience de 7 ans en travaillant avec des particuliers</bold>. J’ai également travaillé à mon compte dans un magasin comme <bold>vendeur de plantes d’ornement à Agadir</bold>. Aujourd'hui, je suis fier de cumuler <bold>15 ans d’expérience en tant que propriétaire et gérant de ma propre société</bold>."
+    },
+    "activities": {
+      "title": "Nos Activités & Missions",
+      "subtitle": "Nous mettons notre passion et notre savoir-faire au service de vos espaces verts à travers un panel complet d'activités.",
+      "main": {
+        "title": "Activités Principales",
+        "items": {
+          "0": "Aménagement paysager des jardins",
+          "1": "Entretien des espaces verts",
+          "2": "Production et commercialisation locale des plantes d'ornement",
+          "3": "Opérations techniques d'aménagement et d'entretien (parcs, jardins publics/privés, terrains de sport, hôtels, Riads, etc.)",
+          "4": "Construction de cascades et bassins d'agrément",
+          "5": "Montage de volières pour oiseaux",
+          "6": "Installation d'aquariums"
+        }
+      },
+      "secondary": {
+        "title": "Activité Secondaire",
+        "desc": "<bold>Vente directe sur place et commercialisation</bold> de :",
+        "items": {
+          "0": "Plantes d'ornement",
+          "1": "Poteries artisanales",
+          "2": "Oiseaux exotiques",
+          "3": "Poissons exotiques",
+          "4": "Divers accessoires concernant ce domaine"
+        }
+      },
+      "missions": {
+        "title": "Missions Principales",
+        "desc": "Nous disposons sur place d'ouvriers qualifiés exerçant sous l'autorité d'un encadrant technique en relation directe avec nos clients pour :",
+        "items": {
+          "0": "Préparer les sols (terrassements, désherbage…)",
+          "1": "Effectuer les plantations de végétaux et les protéger",
+          "2": "Engazonnement",
+          "3": "Installer les équipements nécessaires (arrosage, clôture)",
+          "4": "Réaliser la maçonnerie légère (bordures, dalles, pavés…)",
+          "5": "Tailler les arbres et arbustes",
+          "6": "Assurer l'entretien des surfaces (suivi et conseil)"
+        }
+      }
+    },
+    "qualities": {
+      "title": "Qualités Requises",
+      "desc": "Nous engageons un personnel ayant une excellente connaissance du marché pour cibler nos clients, particuliers ou professionnels, en leur proposant des produits et des services d'une qualité irréprochable."
+    },
+    "skills": {
+      "title": "Nos Compétences",
+      "subtitle": "Notre expérience de base est de former un personnel adéquat afin d'acquérir le savoir-faire et l'expertise nécessaires pour satisfaire pleinement nos clients potentiels.",
+      "items": {
+        "plants": {
+          "title": "Connaissance des végétaux",
+          "desc": "Maîtrise approfondie des plantes et de leur cycle de développement."
+        },
+        "methods": {
+          "title": "Maîtrise des méthodes",
+          "desc": "Expertise dans les méthodes de plantation et d'engazonnement."
+        },
+        "adaptation": {
+          "title": "Capacité d'adaptation",
+          "desc": "Aptitude à intervenir sur une diversité de chantiers et de climats."
+        },
+        "initiative": {
+          "title": "Sens de l'initiative",
+          "desc": "Proactivité et capacité à proposer des solutions adaptées sur le terrain."
+        }
+      }
+    }
+  },
+
+
+  "Contact": {
+    "hero": {
+      "title": "Contactez-nous",
+      "desc": "Un projet de jardin ? Une question ? N'hésitez pas à nous écrire ou à nous appeler. Nous vous répondrons dans les plus brefs délais."
+    },
+    "info": {
+      "title": "Nos Coordonnées",
+      "address": "Adresse",
+      "phone": "Téléphone / WhatsApp",
+      "email": "Email",
+      "hours": "Horaires",
+      "hours_desc_1": "Lundi – Vendredi : 08h00 – 18h00",
+      "hours_desc_2": "Samedi : 08h00 – 13h00"
+    },
+    "form": {
+      "title": "Demande de devis",
+      "desc": "Remplissez le formulaire ci-dessous pour nous faire part de votre projet.",
+      "name_label": "Nom *",
+      "name_placeholder": "Votre nom complet",
+      "phone_label": "Téléphone *",
+      "phone_placeholder": "ex: 0661843714 ou +212661843714",
+      "email_label": "Email (optionnel)",
+      "email_placeholder": "votre@email.com",
+      "project_label": "Type de projet",
+      "project_select": "— Sélectionner —",
+      "project_options": {
+        "0": "Aménagement de jardin",
+        "1": "Conception d'espaces extérieurs",
+        "2": "Plantation & Végétalisation",
+        "3": "Arrosage automatique",
+        "4": "Éclairage extérieur",
+        "5": "Entretien & Contrats"
+      },
+      "msg_label": "Message *",
+      "msg_placeholder": "Décrivez votre projet, surface approximative, contraintes...",
+      "consent": "J'accepte la politique de confidentialité *",
+      "submit": "Envoyer ma demande",
+      "submitting": "Envoi en cours…",
+      "success": "✅ Message envoyé avec succès ! Nous vous contacterons très vite.",
+      "error": "❌ Erreur lors de l'envoi. Veuillez réessayer.",
+      "network_error": "❌ Erreur réseau. Vérifiez votre connexion."
+    },
+    "validation": {
+      "name": "Le nom doit contenir au moins 2 caractères.",
+      "phone": "Numéro invalide. Utilisez le format 0612345678 ou +212612345678.",
+      "email": "Veuillez entrer une adresse email valide.",
+      "message": "Le message est trop court (minimum 10 caractères).",
+      "consent": "Vous devez accepter la politique de confidentialité pour continuer."
+    }
+  },
+
+
+
+
+  "Legal": {
+    "metadata": {
+      "title": "Mentions Légales",
+      "desc": "Mentions légales du site Souss Garden, entreprise d'aménagement paysager au Maroc."
+    },
+    "hero": {
+      "title": "Mentions Légales"
+    },
+    "section1": {
+      "title": "1. Éditeur du site",
+      "raison": "Raison sociale :",
+      "siege": "Siège social :",
+      "tel": "Téléphone / Fax :",
+      "gsm": "GSM :"
+    },
+    "section2": {
+      "title": "2. Hébergement",
+      "desc": "Le site est hébergé par <bold>Vercel Inc.</bold>, situé au 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis."
+    },
+    "section3": {
+      "title": "3. Propriété intellectuelle",
+      "desc": "L'ensemble du contenu de ce site est soumis au droit d'auteur. Toute reproduction est interdite sans autorisation préalable."
+    }
+  },
+
+  "Privacy": {
+    "metadata": {
+      "title": "Politique de Confidentialité",
+      "desc": "Politique de confidentialité et gestion des données personnelles chez Souss Garden."
+    },
+    "hero": {
+      "title": "Politique de Confidentialité"
+    },
+    "intro": "<bold>En cours de rédaction.</bold> Cette page détaillera la manière dont nous collectons, utilisons et protégeons vos données personnelles.",
+    "section1": {
+      "title": "1. Collecte des données personnelles",
+      "desc": "Les données personnelles collectées via nos formulaires (notamment le formulaire de contact) sont destinées uniquement à traiter vos demandes et ne seront jamais revendues à des tiers."
+    },
+    "section2": {
+      "title": "2. Utilisation des données",
+      "desc": "Nous utilisons vos données pour vous recontacter afin de vous proposer nos services et devis."
+    },
+    "section3": {
+      "title": "3. Droits des utilisateurs",
+      "desc": "Conformément à la législation en vigueur, vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles. Pour l'exercer, contactez-nous via notre formulaire."
+    },
+    "section4": {
+      "title": "4. Cookies",
+      "desc": "Ce site peut utiliser des cookies pour améliorer l'expérience utilisateur ou pour des statistiques de visites."
+    }
+  },
+  "Portfolio": {
+    "homeSection": {
+      "title": "Aperçu de nos réalisations",
+      "desc": "Découvrez un échantillon de nos derniers aménagements paysagers.",
+      "button": "Voir toute notre galerie"
+    },
+    "metadata": {
+      "title": "Nos Réalisations",
+      "desc": "Découvrez les projets de Souss Garden : jardins, villas, cascades, riads, accueil de stagiaires et plus encore à Taroudant."
+    },
+    "hero": {
+      "title": "Nos Réalisations & Projets",
+      "desc": "Parcourez notre galerie classée par activité pour découvrir notre savoir-faire, nos aménagements sur-mesure et nos différents services associés."
+    },
+    "categories": {
+      "all": "Tout voir",
+      "jardins": "Jardins",
+      "villas": "Villas",
+      "cafe-resto": "Cafés & Restos",
+      "cascades": "Cascades",
+      "plantes": "Pots & Plantes",
+      "poterie": "Poterie",
+      "chantiers": "Chantiers",
+      "transport": "Transport Marchandises"
+    },
+    "items": {
+      "1": {
+        "title": "Aménagement Jardin Moderne",
+        "category": "Jardins",
+        "description": "Conception et réalisation de jardins secs et modernes adaptés au climat."
+      },
+      "2": {
+        "title": "Extérieur Villa Taroudant",
+        "category": "Villas",
+        "description": "Aménagement paysager complet pour une villa de luxe dans la région."
+      },
+      "3": {
+        "title": "Plantes d'Ornement",
+        "category": "Pots & Plantes",
+        "description": "Sélection rigoureuse de plantes ornementales pour sublimer votre jardin."
+      },
+      "4": {
+        "title": "Décoration Café",
+        "category": "Cafés & Restos",
+        "description": "Végétalisation d'espaces professionnels pour une ambiance chaleureuse."
+      },
+      "5": {
+  "title": "Suivi et exécution",
+  "category": "Chantiers",
+  "description": "Supervision rigoureuse de nos équipes sur le terrain pour garantir la conformité et la qualité des aménagements."
+},
+      "6": {
+        "title": "Livraison de Végétaux",
+        "category": "Transport",
+        "description": "Service de transport sécurisé pour vos plantes et arbres de grande taille."
+      },
+      "7": {
+        "title": "Collection Pots Artisanaux",
+        "category": "Poterie",
+        "description": "Vente et installation de poteries traditionnelles pour vos extérieurs."
+      },
+      "8": {
+        "title": "Création Cascade en Pierre",
+        "category": "Cascades",
+        "description": "Intégration de points d'eau apaisants dans vos espaces verts."
+      }
+    }
+  },
+  
+  "Hero": {
+    "title": "Jardinier Paysagiste",
+    "short_desc": "Passionné par les merveilles de la nature, je mets mon expertise au service de vos espaces verts pour créer des paysages uniques et harmonieux. Je vous accompagne depuis plus de 15 ans dans la réalisation de votre rêve extérieur.",
+  "badge1": "Ans d'expérience",
+  "badge2_title": "Paysagiste",
+  "badge2_subtitle": "Expert Passionné",
+  "bio": "Je vous accompagne depuis plus de 15 ans dans la réalisation de votre rêve extérieur.",
+  "buttons": {
+    "quote": "Demander un devis",
+    "whatsapp": "Contact WhatsApp"
+  }
+},
+"CTA": {
+  "title": "Prêt à transformer votre extérieur en un jardin de rêve ?",
+  "desc": "Contactez notre équipe de paysagistes à Taroudant pour discuter de votre projet. Nous vous accompagnons de la conception à la réalisation.",
+  "button": "Demander un devis personnalisé"
+},
+"Faq": {
+  "title": "Questions Fréquentes",
+  "subtitle": "Tout ce que vous devez savoir",
+  "desc": "Trouvez des réponses rapides aux questions les plus couramment posées par nos futurs clients.",
+  "items": {
+    "0": { "question": "Comment demander un devis ?", "answer": "Vous pouvez remplir notre formulaire de contact ou nous appeler directement." },
+    "1": { "question": "Proposez-vous un service d'entretien ?", "answer": "Oui, nous proposons des contrats d'entretien personnalisés pour vos jardins." },
+    "2": { "question": "Quelle est votre zone d'intervention ?", "answer": "Nous intervenons principalement dans la région de Taroudant et Agadir." }
+  }
+},
+"Stats": {
+  "items": {
+    "0": "Projets Réalisés",
+    "1": "Années d'Expérience",
+    "2": "Taux de Satisfaction"
+  }
+},
+
+
+"Testimonials": {
+  "title": "Témoignages",
+  "subtitle": "Ce que disent nos clients",
+  "description": "Découvrez les avis de ceux qui nous ont fait confiance.",
+  "prev": "Précédent",
+  "next": "Suivant",
+  "items": {
+    "0": { "role": "Propriétaire de Villa", "content": "Une équipe professionnelle qui a su transformer mon terrain nu en un véritable oasis. Le choix des plantes est parfaitement adapté à la chaleur de Taroudant." },
+    "1": { "role": "Gérante Maison d'hôtes", "content": "Nous travaillons avec eux pour l'entretien depuis 2 ans. Toujours ponctuels et le jardin n'a jamais été aussi beau. Je recommande vivement !" },
+    "2": { "role": "Client Résidentiel", "content": "Excellente écoute de nos besoins. L'installation de l'arrosage automatique goutte-à-goutte fonctionne à merveille et nous fait économiser beaucoup d'eau." },
+    "3": { "role": "Expatriée", "content": "The best landscaping company in the Souss region! They built a beautiful dry garden for us that requires very little maintenance." }
+  }
+},
+"WhyUs": {
+  "title": "Pourquoi choisir notre entreprise ?",
+  "subtitle": "L'exigence au service de votre jardin",
+  "description": "Basés à Taroudant, nous concevons des jardins esthétiques et résilients. Notre force réside dans notre capacité à marier vos attentes avec les réalités de notre environnement.",
+  "items": {
+    "0": { "title": "Expertise Locale", "desc": "Parfaite connaissance du climat du Souss et des plantes adaptées." },
+    "1": { "title": "Gestion de l'Eau", "desc": "Solutions d'arrosage économes et végétalisation raisonnée." },
+    "2": { "title": "Qualité & Finitions", "desc": "Un souci du détail apporté à chaque étape de l'aménagement." },
+    "3": { "title": "Démarche Durable", "desc": "Respect de l'environnement et de la biodiversité locale." }
+  }
+},
+"Zones": {
+  "title": "Nos Zones d'Intervention",
+  "desc": "Implantés à Taroudant, nous nous déplaçons dans toute la région du Souss-Massa pour réaliser vos projets d'aménagement paysager.",
+  "zones": {
+    "taroudant": "Taroudant",
+    "agadir": "Agadir",
+    "ouled_teima": "Ouled Teima",
+    "tiznit": "Tiznit",
+    "taliouine": "Taliouine",
+    "autres": "Autres localités"
+  }
+},
+"Services": {
+  "title": "Nos Services",
+"subtitle": "Notre Expertise",
+"desc": "Nous proposons une gamme complète de solutions pour l'aménagement et l'entretien de vos espaces verts.",
+
+
+  "metadata": {
+    "title": "Nos Services",
+    "desc": "Découvrez l'ensemble de nos prestations d'aménagement et d'entretien paysager proposés par"
+  },
+  "hero": {
+    "title": "Nos Services & Expertise",
+    "desc": "De la conception à l'entretien, nous offrons une gamme complète de services pour sublimer vos espaces extérieurs."
+  },
+  "list": {
+    "0": {
+      "title": "Aménagement Paysager",
+      "desc": "Création sur-mesure de jardins, parcs et espaces verts adaptés à votre environnement et à vos envies."
+    },
+    "1": {
+      "title": "Systèmes d'Irrigation",
+      "desc": "Installation et maintenance de systèmes d'arrosage automatique goutte-à-goutte pour une gestion optimale de l'eau."
+    },
+    "2": {
+      "title": "Bacs et Jardinières",
+      "desc": "Fourniture et mise en place de bacs, pots et jardinières design pour vos balcons, terrasses et intérieurs."
+    },
+    "3": {
+      "title": "Éclairage Extérieur",
+      "desc": "Mise en lumière de vos allées, plantes et façades pour profiter de votre jardin de jour comme de nuit."
+    },
+    "4": {
+      "title": "Plantation & Gazon",
+      "desc": "Sélection soignée de végétaux, plantation d'arbres, d'arbustes et pose de gazon naturel ou synthétique."
+    },
+    "5": {
+      "title": "Entretien Régulier",
+      "desc": "Contrats d'entretien périodiques pour garder vos espaces verts propres, sains et florissants toute l'année."
+    },
+    "6": {
+      "title": "Aménagements Spécifiques",
+      "desc": "Construction de cascades, bassins, volières et intégration d'éléments de décoration paysagère."
+    },
+    "7": {
+      "title": "Traitement & Élagage",
+      "desc": "Traitements phytosanitaires respectueux, taille de formation, élagage et abattage d'arbres en toute sécurité."
+    },
+    "8": {
+      "title": "Pépinière & Fournitures",
+      "desc": "Vente directe de plantes ornementales, d'arbres fruitiers, de terreau et d'accessoires de jardinage."
+    }
+  }
+},
+"Footer": {
+  "description": "Travaux de pépinière aménagement et entretien des paysages et espaces verts, traitement phytosanitaire des jardins et des locaux, montage des aquariums, construction des volières, vente de plantes et travaux divers.",
+  "quickLinksTitle": "Liens Rapides",
+  "quickLinks": {
+    "home": "Accueil",
+    "services": "Nos Services",
+    "portfolio": "Nos Réalisations",
+    "about": "À Propos",
+    "contact": "Contact"
+  },
+  "servicesTitle": "Nos Services",
+  "servicesList": {
+    "0": "Aménagement Paysager",
+    "1": "Entretien d'Espaces Verts",
+    "2": "Plantation & Engazonnement",
+    "3": "Aménagements Spécifiques",
+    "4": "Installations & Équipements",
+    "5": "Pépinière & Accessoires"
+  },
+  "contactTitle": "Contact",
+  "contactInfo": {
+    "noAddress": "Adresse non renseignée",
+    "noPhone": "Téléphone non renseigné",
+    "noEmail": "Email non renseigné",
+    "scheduleWeek": "Lun - Ven : 08h - 18h",
+    "scheduleWeekend": "Samedi : 08h - 13h"
+  },
+  "bottom": {
+    "rights": "Tous droits réservés.",
+    "landscaper": "Paysagiste",
+    "legal": "Mentions légales",
+    "privacy": "Politique de confidentialité"
+  }
+},
+"WhatsApp": {
+  "message": "Bonjour 👋 Je souhaite un devis pour un projet d'aménagement paysager.",
+  "tooltip": "Discutons sur WhatsApp",
+  "aria": "Contactez-nous sur WhatsApp"
+}
+}
