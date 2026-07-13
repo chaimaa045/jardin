@@ -123,6 +123,9 @@ export function Footer() {
         <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-white/60 text-sm">
           <p className="text-center md:text-left">
             &copy; {currentYear} {clientProfile.company.businessName} - {t('bottom.landscaper')} {clientProfile.company.city}. {t('bottom.rights')}
+            <a href="/admin/login" className="ml-2 text-white/10 hover:text-white/80 transition-colors" title="Espace Administration">
+              •
+            </a>
           </p>
           <div className="flex gap-6">
             <Link href="/mentions-legales" className="hover:text-white transition-colors">{t('bottom.legal')}</Link>

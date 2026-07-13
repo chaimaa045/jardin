@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Variables d'environnement — NE JAMAIS COMMITER ###
+.env
+.env.*
+

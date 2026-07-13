@@ -123,7 +123,7 @@ export function Header() {
             
             {/* Bouton Panier Desktop */}
             <Link 
-              href="/cart" 
+              href="/checkout" 
               className="relative p-2 text-zinc-600 hover:text-secondary transition-colors"
               aria-label="Voir le panier"
             >
@@ -165,7 +165,7 @@ export function Header() {
             
             {/* Bouton Panier Mobile toujours visible */}
             <Link 
-              href="/cart" 
+              href="/checkout" 
               className="p-2 text-primary bg-white/80 backdrop-blur rounded-lg shadow-card border border-gray-100 relative"
               aria-label="Voir le panier"
             >
