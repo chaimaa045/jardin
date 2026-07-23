@@ -14,6 +14,12 @@ const nextConfig: NextConfig = {
         port: '8080',
         pathname: '/uploads/**',
       },
+      // Cloudinary
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/**',
+      },
       // Autoriser potentiellement le serveur hébergé
       {
         protocol: 'https',

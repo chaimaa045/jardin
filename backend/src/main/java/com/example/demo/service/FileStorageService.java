@@ -1,45 +1,33 @@
 package com.example.demo.service;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.annotation.PostConstruct;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
 public class FileStorageService {
 
-    private final Path fileStorageLocation;
+    private final Cloudinary cloudinary;
 
-    public FileStorageService(@Value("${file.upload-dir:uploads}") String uploadDir) {
-        this.fileStorageLocation = Paths.get(uploadDir).toAbsolutePath().normalize();
-    }
-
-    @PostConstruct
-    public void init() {
-        try {
-            Files.createDirectories(this.fileStorageLocation);
-        } catch (Exception ex) {
-            throw new RuntimeException("Impossible de créer le répertoire où les fichiers uploadés seront stockés.", ex);
-        }
+    public FileStorageService(Cloudinary cloudinary) {
+        this.cloudinary = cloudinary;
     }
 
     public String storeFile(MultipartFile file) {
         String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
-        
+
         try {
             if (originalFileName.contains("..")) {
                 throw new RuntimeException("Le nom du fichier contient une séquence de chemin invalide " + originalFileName);
             }
 
-            // Générer un nom de fichier unique pour éviter les conflits
+            // Générer un public_id unique pour l'image
             String fileExtension = "";
             int dotIndex = originalFileName.lastIndexOf('.');
             if (dotIndex >= 0) {
@@ -47,13 +35,16 @@ public class FileStorageService {
             }
             String newFileName = UUID.randomUUID().toString() + fileExtension;
 
-            // Copier le fichier vers l'emplacement cible
-            Path targetLocation = this.fileStorageLocation.resolve(newFileName);
-            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            // Upload de l'image sur Cloudinary
+            Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap(
+                    "public_id", UUID.randomUUID().toString(),
+                    "folder", "souss-garden" // Dossier optionnel dans Cloudinary
+            ));
 
-            return newFileName;
+            // Retourner l'URL sécurisée
+            return uploadResult.get("secure_url").toString();
         } catch (IOException ex) {
-            throw new RuntimeException("Impossible de stocker le fichier " + originalFileName + ". Veuillez réessayer!", ex);
+            throw new RuntimeException("Impossible de stocker le fichier " + originalFileName + " sur Cloudinary. Veuillez réessayer!", ex);
         }
     }
 }
