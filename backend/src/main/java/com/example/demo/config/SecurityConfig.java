@@ -60,15 +60,19 @@ public class SecurityConfig {
                 // Règles d'autorisation
                 .authorizeHttpRequests(auth -> auth
                         // Routes publiques — lecture seule
-                        .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/products", "/api/products/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/categories", "/api/categories/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
+                        // Autoriser les requêtes OPTIONS (CORS preflight)
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         // Création de commande — public
                         .requestMatchers(HttpMethod.POST, "/api/orders").permitAll()
                         // Route de connexion — publique
                         .requestMatchers(HttpMethod.POST, "/api/admin/auth/login").permitAll()
                         // Toutes les autres routes /api/admin/** — ADMIN uniquement
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        // Autoriser l'endpoint /error pour ne pas masquer les erreurs 500 en 403
+                        .requestMatchers("/error").permitAll()
                         // Tout le reste — authentifié
                         .anyRequest().authenticated()
                 )

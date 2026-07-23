@@ -13,6 +13,17 @@
       "about": "من نحن",
       "contact": "اتصل بنا"
     },
+    "shopCategories": {
+      "plants": "نباتات",
+      "shrubs": "شجيرات",
+      "tools": "أدوات",
+      "furniture": "أثاث خارجي",
+      "accessories": "إكسسوارات"
+    },
+    "utils": {
+      "search": "بحث",
+      "account": "حسابي"
+    },
     "buttons": {
       "switch_ar": "AR",
       "switch_fr": "FR",

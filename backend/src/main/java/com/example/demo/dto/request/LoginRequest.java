@@ -14,6 +14,6 @@ public class LoginRequest {
     private String username;
 
     @NotBlank(message = "Le mot de passe est obligatoire")
-    @Size(min = 6, message = "Le mot de passe doit contenir au moins 6 caractères")
+    @Size(min = 5, message = "Le mot de passe doit contenir au moins 5 caractères")
     private String password;
 }
