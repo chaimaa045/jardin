@@ -54,7 +54,7 @@ export default function CartPage() {
                       <h3 className="text-lg font-semibold text-gray-800">
                         <Link href={`/shop/${item.id}`} className="hover:text-primary">{item.name}</Link>
                       </h3>
-                      <p className="mt-1 text-sm text-gray-500">{item.category}</p>
+                      <p className="mt-1 text-sm text-gray-500">{typeof item.category === 'object' ? item.category?.name : item.category}</p>
                       <p className="mt-2 text-lg font-bold text-primary">{item.price} DH</p>
                     </div>
                     <div className="mt-4 sm:mt-0 sm:pr-9">

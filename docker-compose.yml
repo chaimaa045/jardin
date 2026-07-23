@@ -1,0 +1,70 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: jardin-backend
+    ports:
+      - "8080:8080"
+    # Charger les variables d'environnement si nécessaire
+    env_file:
+      - ./backend/.env
+    restart: unless-stopped
+    volumes:
+      - ./backend/uploads:/app/uploads
+    networks:
+      - jardin_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: jardin-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - jardin_network
+
+  # --- SonarQube et sa base de données (PostgreSQL) ---
+  sonarqube:
+    image: sonarqube:10.5.1-community
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+    environment:
+      - SONAR_JDBC_URL=jdbc:postgresql://sonar-db:5432/sonar
+      - SONAR_JDBC_USERNAME=sonar
+      - SONAR_JDBC_PASSWORD=sonar
+    depends_on:
+      - sonar-db
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_logs:/opt/sonarqube/logs
+      - sonarqube_extensions:/opt/sonarqube/extensions
+    networks:
+      - jardin_network
+
+  sonar-db:
+    image: postgres:15
+    container_name: sonar-db
+    environment:
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonar
+      - POSTGRES_DB=sonar
+    volumes:
+      - sonar_postgres_data:/var/lib/postgresql/data
+    networks:
+      - jardin_network
+
+networks:
+  jardin_network:
+    driver: bridge
+
+volumes:
+  sonarqube_data:
+  sonarqube_logs:
+  sonarqube_extensions:
+  sonar_postgres_data:

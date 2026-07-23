@@ -55,7 +55,7 @@ export interface ProductFormData {
   featured: boolean;
 }
 
-export type OrderStatus = 'PENDING' | 'CONFIRMED' | 'CANCELLED' | 'COMPLETED';
+export type OrderStatus = 'PENDING' | 'CONFIRMED' | 'CANCELLED' | 'COMPLETED' | 'NOUVELLE' | 'ACCEPTEE' | 'LIVREE' | 'ANNULEE';
 
 export interface OrderItem {
   id: number;
