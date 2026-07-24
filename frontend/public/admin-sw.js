@@ -35,8 +35,12 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Pour la PWA Admin, on ne veut PAS de cache agressif car on a besoin de données fraîches de l'API.
-  // On utilise une stratégie "Network First" (Réseau en priorité, Cache en secours)
+  // Ne PAS intercepter les requêtes vers l'API backend (cross-origin)
+  if (!event.request.url.startsWith(self.location.origin)) {
+    return; // Laisser le navigateur gérer normalement
+  }
+
+  // Pour les requêtes du même domaine : stratégie "Network First"
   event.respondWith(
     fetch(event.request).catch(() => {
       return caches.match(event.request);
