@@ -90,9 +90,13 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // Origines autorisées depuis les variables d'environnement
-        List<String> origins = Arrays.asList(allowedOriginsStr.split(","));
-        configuration.setAllowedOrigins(origins);
+        // Origines autorisées depuis les variables d'environnement + fallback pour Vercel
+        configuration.setAllowedOriginPatterns(Arrays.asList(
+            "https://*.vercel.app",
+            "http://localhost:3000",
+            "http://127.0.0.1:3000",
+            allowedOriginsStr
+        ));
 
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With"));
