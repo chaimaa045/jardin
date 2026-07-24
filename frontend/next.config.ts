@@ -27,6 +27,18 @@ const nextConfig: NextConfig = {
       }
     ],
   },
+  // Proxy API — élimine complètement le CORS
+  // Le navigateur appelle /api/... sur Vercel (même domaine = pas de CORS)
+  // Vercel transfère la requête au backend Back4App (serveur-à-serveur = pas de CORS)
+  async rewrites() {
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+    return [
+      {
+        source: '/api/:path*',
+        destination: `${backendUrl}/api/:path*`,
+      },
+    ];
+  },
 };
 
-export default withNextIntl(nextConfig);
+export default withNextIntl(nextConfig);
