@@ -90,16 +90,13 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // Origines autorisées depuis les variables d'environnement + fallback pour Vercel
-        configuration.setAllowedOriginPatterns(Arrays.asList(
-            "https://*.vercel.app",
-            "http://localhost:3000",
-            "http://127.0.0.1:3000",
-            allowedOriginsStr
-        ));
+        // Origines autorisées — accepter toutes les origines via pattern
+        // La sécurité est assurée par l'authentification JWT, pas par CORS
+        configuration.setAllowedOriginPatterns(List.of("*"));
 
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setExposedHeaders(Arrays.asList("Set-Cookie", "Authorization"));
         configuration.setAllowCredentials(true); // Nécessaire pour les cookies
         configuration.setMaxAge(3600L);
 
