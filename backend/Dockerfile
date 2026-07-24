@@ -14,5 +14,5 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 # Le port exposé par défaut par Spring Boot
 EXPOSE 8080
-# Commande de démarrage avec limites de RAM (Crucial pour Back4App Free Tier)
-ENTRYPOINT ["java", "-Xmx150m", "-Xss512k", "-XX:MaxMetaspaceSize=100m", "-jar", "app.jar"]
+# Commande de démarrage avec gestion automatique de la RAM pour conteneur
+ENTRYPOINT ["java", "-XX:MaxRAMPercentage=75.0", "-jar", "app.jar"]
