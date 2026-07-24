@@ -50,7 +50,7 @@ public class AuthServiceImpl implements AuthService {
             return new AuthResponse("Connexion réussie", username, true);
 
         } catch (AuthenticationException e) {
-            throw new RuntimeException("Identifiants incorrects");
+            throw new org.springframework.security.authentication.BadCredentialsException("Identifiants incorrects");
         }
     }
 

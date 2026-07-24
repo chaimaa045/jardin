@@ -52,13 +52,27 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Gestion des accès non autorisés (401)
+     * Gestion des erreurs d'authentification (401)
      */
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<Map<String, Object>> handleRuntimeException(RuntimeException ex) {
+    @ExceptionHandler(org.springframework.security.core.AuthenticationException.class)
+    public ResponseEntity<Map<String, Object>> handleAuthenticationException(org.springframework.security.core.AuthenticationException ex) {
+        Map<String, Object> response = buildErrorResponse(
+                HttpStatus.UNAUTHORIZED,
+                "Identifiants incorrects",
+                null
+        );
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
+
+    /**
+     * Gestion des autres erreurs internes (500)
+     */
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String, Object>> handleException(Exception ex) {
+        ex.printStackTrace(); // Log l'erreur pour pouvoir la déboguer dans les logs Back4app
         Map<String, Object> response = buildErrorResponse(
                 HttpStatus.INTERNAL_SERVER_ERROR,
-                "Une erreur interne est survenue.",
+                "Une erreur interne est survenue: " + ex.getMessage(),
                 null
         );
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
