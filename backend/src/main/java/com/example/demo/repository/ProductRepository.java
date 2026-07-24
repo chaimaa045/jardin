@@ -11,6 +11,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // Spring Data JPA génère automatiquement la requête : SELECT * FROM products WHERE featured = true
     List<Product> findByFeaturedTrue();
 
-    // Recherche par catégorie
-    List<Product> findByCategoryIgnoreCase(String category);
+    // Recherche par nom de catégorie (navigation vers le champ 'name' de l'entité Category)
+    List<Product> findByCategory_NameIgnoreCase(String categoryName);
 }
