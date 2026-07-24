@@ -9,26 +9,28 @@ import type { AdminUser } from '@/types/admin';
  * Vérifie l'état de connexion au démarrage via GET /api/admin/auth/me.
  * Gère login, logout et l'état de chargement.
  */
-export function useAuth(requireAuth: boolean = false) {
+export function useAuth() {
   const [user, setUser] = useState<AdminUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
+  /**
+   * Vérifie si l'admin est déjà connecté (cookie valide).
+   * Appelé automatiquement au montage du composant.
+   */
   const checkAuth = useCallback(async () => {
     try {
       setIsLoading(true);
       const data = await authApi.me();
       setUser({ username: data.username, authenticated: true });
     } catch {
+      // Cookie invalide ou expiré — non authentifié
       setUser(null);
-      if (requireAuth) {
-        router.push('/admin/login');
-      }
     } finally {
       setIsLoading(false);
     }
-  }, [requireAuth, router]);
+  }, []);
 
   useEffect(() => {
     checkAuth();

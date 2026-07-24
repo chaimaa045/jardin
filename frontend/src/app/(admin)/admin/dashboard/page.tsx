@@ -1,6 +1,5 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { useAuth } from '@/hooks/useAuth';
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
 import { adminProductApi, orderApi } from '@/services/api';
 import type { AdminProduct, Order } from '@/types/admin';
@@ -84,14 +83,11 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 export default function AdminDashboardPage() {
-  const { isAuthenticated, isLoading: authLoading } = useAuth(true); // Redirige si non authentifié
   const [products, setProducts] = useState<AdminProduct[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!isAuthenticated) return; // Ne pas fetch tant qu'on n'est pas sûr d'être loggé
-
     const load = async () => {
       try {
         const [productsData, ordersData] = await Promise.all([
@@ -107,17 +103,7 @@ export default function AdminDashboardPage() {
       }
     };
     load();
-  }, [isAuthenticated]);
-
-  if (authLoading || (!isAuthenticated && isLoading)) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#FDFCFB]">
-        <p className="text-primary/50 flex items-center gap-2 font-medium">
-          <Clock className="w-5 h-5 animate-spin" /> Vérification des accès...
-        </p>
-      </div>
-    );
-  }
+  }, []);
 
   // --- TRAITEMENT DES DONNÉES ---
 

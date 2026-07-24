@@ -14,6 +14,10 @@ public class ResourceNotFoundException extends RuntimeException {
         super(String.format("Ressource '%s' avec l'id %d introuvable.", resourceName, id));
     }
 
+    public ResourceNotFoundException(String resourceName, String identifier) {
+        super(String.format("Ressource '%s' avec l'identifiant '%s' introuvable.", resourceName, identifier));
+    }
+
     public ResourceNotFoundException(String message) {
         super(message);
     }

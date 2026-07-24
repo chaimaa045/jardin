@@ -13,17 +13,6 @@
       "about": "À Propos",
       "contact": "Contact"
     },
-    "shopCategories": {
-      "plants": "Plantes",
-      "shrubs": "Arbustes",
-      "tools": "Outils",
-      "furniture": "Mobilier extérieur",
-      "accessories": "Accessoires"
-    },
-    "utils": {
-      "search": "Rechercher",
-      "account": "Mon Compte"
-    },
     "buttons": {
       "switch_ar": "AR",
       "switch_fr": "FR",

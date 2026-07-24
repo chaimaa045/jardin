@@ -6,6 +6,9 @@
  * - Gestion centralisée des erreurs
  */
 
+import { Product, Category } from '@/types/shop';
+import { AdminProduct, Category as AdminCategory, Order, ProductFormData, CategoryFormData } from '@/types/admin';
+
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 
 interface FetchOptions extends RequestInit {
@@ -54,9 +57,9 @@ async function apiFetch<T>(endpoint: string, options: FetchOptions = {}): Promis
 // ============================================================
 
 export const publicApi = {
-  getProducts: () => apiFetch<unknown[]>('/api/products'),
-  getProductById: (id: number) => apiFetch<unknown>(`/api/products/${id}`),
-  getFeaturedProducts: () => apiFetch<unknown[]>('/api/products/featured'),
+  getProducts: () => apiFetch<Product[]>('/api/products'),
+  getProductById: (id: number) => apiFetch<Product>(`/api/products/${id}`),
+  getFeaturedProducts: () => apiFetch<Product[]>('/api/products/featured'),
 };
 
 // ============================================================
@@ -84,12 +87,12 @@ export const authApi = {
 // ============================================================
 
 export const adminProductApi = {
-  getAll: () => apiFetch<unknown[]>('/api/admin/products'),
-  getById: (id: number) => apiFetch<unknown>(`/api/admin/products/${id}`),
-  create: (data: unknown) =>
-    apiFetch<unknown>('/api/admin/products', { method: 'POST', data }),
-  update: (id: number, data: unknown) =>
-    apiFetch<unknown>(`/api/admin/products/${id}`, { method: 'PUT', data }),
+  getAll: () => apiFetch<AdminProduct[]>('/api/admin/products'),
+  getById: (id: number) => apiFetch<AdminProduct>(`/api/admin/products/${id}`),
+  create: (data: ProductFormData) =>
+    apiFetch<AdminProduct>('/api/admin/products', { method: 'POST', data }),
+  update: (id: number, data: ProductFormData) =>
+    apiFetch<AdminProduct>(`/api/admin/products/${id}`, { method: 'PUT', data }),
   delete: (id: number) =>
     apiFetch<void>(`/api/admin/products/${id}`, { method: 'DELETE' }),
 };
@@ -99,12 +102,12 @@ export const adminProductApi = {
 // ============================================================
 
 export const categoryApi = {
-  getAll: () => apiFetch<unknown[]>('/api/categories'),
-  getAdminAll: () => apiFetch<unknown[]>('/api/admin/categories'),
-  create: (data: unknown) =>
-    apiFetch<unknown>('/api/admin/categories', { method: 'POST', data }),
-  update: (id: number, data: unknown) =>
-    apiFetch<unknown>(`/api/admin/categories/${id}`, { method: 'PUT', data }),
+  getAll: () => apiFetch<Category[]>('/api/categories'),
+  getAdminAll: () => apiFetch<AdminCategory[]>('/api/admin/categories'),
+  create: (data: CategoryFormData) =>
+    apiFetch<AdminCategory>('/api/admin/categories', { method: 'POST', data }),
+  update: (id: number, data: CategoryFormData) =>
+    apiFetch<AdminCategory>(`/api/admin/categories/${id}`, { method: 'PUT', data }),
   delete: (id: number) =>
     apiFetch<void>(`/api/admin/categories/${id}`, { method: 'DELETE' }),
 };
@@ -114,12 +117,12 @@ export const categoryApi = {
 // ============================================================
 
 export const orderApi = {
-  create: (data: unknown) =>
-    apiFetch<unknown>('/api/orders', { method: 'POST', data }),
-  getAdminAll: () => apiFetch<unknown[]>('/api/admin/orders'),
-  getAdminById: (id: number) => apiFetch<unknown>(`/api/admin/orders/${id}`),
+  create: (data: any) => // any can be replaced if we define OrderRequest type
+    apiFetch<Order>('/api/orders', { method: 'POST', data }),
+  getAdminAll: () => apiFetch<Order[]>('/api/admin/orders'),
+  getAdminById: (id: number) => apiFetch<Order>(`/api/admin/orders/${id}`),
   updateStatus: (id: number, status: string) =>
-    apiFetch<unknown>(`/api/admin/orders/${id}/status`, { method: 'PUT', data: { status } }),
+    apiFetch<Order>(`/api/admin/orders/${id}/status`, { method: 'PUT', data: { status } }),
 };
 
 // ============================================================
