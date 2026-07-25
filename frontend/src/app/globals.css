@@ -6,7 +6,7 @@ html, body {
   overflow-x: hidden;
   position: relative;
   background-color: var(--color-background);
-  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M60 20 C30 20, 30 60, 60 90 C90 60, 90 20, 60 20 Z M20 80 C5 80, 5 100, 20 115 C35 100, 35 80, 20 80 Z M100 -10 C85 -10, 85 10, 100 25 C115 10, 115 -10, 100 -10 Z' fill='%234CAF50' fill-opacity='0.05'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%235B9A6F' fill-opacity='0.08'%3E%3Cpath d='M50 10 C25 10, 15 40, 50 70 C85 40, 75 10, 50 10 Z'/%3E%3Cpath d='M150 60 C130 55, 120 75, 145 100 C170 80, 165 55, 150 60 Z'/%3E%3Cpath d='M30 130 C15 125, 8 145, 28 165 C48 148, 42 125, 30 130 Z'/%3E%3Cpath d='M170 150 C155 145, 145 165, 165 185 C185 168, 180 145, 170 150 Z'/%3E%3Cpath d='M100 100 C80 95, 70 115, 95 140 C120 118, 115 95, 100 100 Z'/%3E%3C/g%3E%3C/svg%3E");
   background-attachment: fixed;
 }
 
@@ -21,8 +21,8 @@ html, body {
   --color-secondary: #2C4235; 
   /* Blanc cassé sablé */
   --color-background: #FAF8F5; 
-  /* Vert pimpant pour les boutons et accents (au lieu de l'orange) */
-  --color-accent: #4CAF50; 
+  /* Vert soft naturel pour boutons et accents */
+  --color-accent: #5B9A6F; 
   /* Couleur pierre claire pour les fonds secondaires */
   --color-surface: #F3EFEA; 
   --color-primary-dark: #121413;
@@ -30,7 +30,7 @@ html, body {
   --font-serif: var(--font-playfair), serif;
   --font-sans: var(--font-inter), sans-serif;
 
-  /* Ombre avec reflet vert naturel */
-  --shadow-elegant: 0 10px 40px -10px rgba(76, 175, 80, 0.2);
+  /* Ombre avec reflet vert soft */
+  --shadow-elegant: 0 10px 40px -10px rgba(91, 154, 111, 0.2);
   --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
 }

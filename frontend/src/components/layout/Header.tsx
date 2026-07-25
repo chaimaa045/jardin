@@ -69,8 +69,8 @@ export function Header() {
 
   return (
     <header className="fixed top-0 inset-x-0 z-40 pointer-events-auto">
-      {/* Top Bar - Very thin green bar */}
-      <div className="bg-primary text-white py-1.5 px-4 text-xs font-medium">
+      {/* Top Bar - Thin soft green bar, attached to nav */}
+      <div className="bg-accent text-white py-1.5 px-4 text-xs font-medium">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center gap-4">
             <a href={`tel:${telHref}`} className="flex items-center gap-1.5 hover:text-white/80 transition-colors">
@@ -91,13 +91,13 @@ export function Header() {
         </div>
       </div>
 
+      {/* Main navbar - attached directly below top bar */}
       <div 
         className={cn(
           "pointer-events-auto transition-all duration-300 relative z-50",
-          "mt-2 mx-3 rounded-[2rem] md:mt-2 md:mx-4 md:rounded-2xl lg:mt-3 lg:mx-auto lg:max-w-7xl",
           isScrolled 
-            ? "bg-white/95 backdrop-blur-md shadow-card py-2 md:py-3 border border-[#e5dfd5]" 
-            : "bg-white/90 backdrop-blur-md shadow-lg md:shadow-none py-3 md:py-4 border border-[#e5dfd5]/50"
+            ? "bg-white/95 backdrop-blur-md shadow-card py-2 md:py-3" 
+            : "bg-white/90 backdrop-blur-md py-3 md:py-4"
         )}
       >
         <div className="container mx-auto px-4 md:px-6">
