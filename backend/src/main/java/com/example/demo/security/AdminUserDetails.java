@@ -1,6 +1,7 @@
 package com.example.demo.security;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.example.demo.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,29 +12,24 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * Fournisseur des informations de l'administrateur unique.
- * Les credentials sont chargés depuis les variables d'environnement
- * (pas depuis une table BDD — pattern YAGNI pour 1 seul admin).
+ * Fournisseur des informations de l'administrateur.
+ * Les credentials sont chargés depuis la table users.
  */
 @Component
+@RequiredArgsConstructor
 public class AdminUserDetails implements UserDetailsService {
 
-    @Value("${admin.username}")
-    private String adminUsername;
-
-    @Value("${admin.password.hash}")
-    private String adminPasswordHash;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if (!adminUsername.equals(username)) {
-            throw new UsernameNotFoundException("Utilisateur non trouvé : " + username);
-        }
+        com.example.demo.model.User userEntity = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé : " + username));
 
         return User.builder()
-                .username(adminUsername)
-                .password(adminPasswordHash) // Hash BCrypt — Spring Security compare automatiquement
-                .authorities(List.of(new SimpleGrantedAuthority("ROLE_ADMIN")))
+                .username(userEntity.getUsername())
+                .password(userEntity.getPasswordHash())
+                .authorities(List.of(new SimpleGrantedAuthority(userEntity.getRole())))
                 .accountExpired(false)
                 .accountLocked(false)
                 .credentialsExpired(false)

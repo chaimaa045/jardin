@@ -1,8 +1,12 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.request.LoginRequest;
+import com.example.demo.dto.request.ChangePasswordRequest;
+import com.example.demo.dto.request.UpdateProfileRequest;
 import com.example.demo.dto.response.AuthResponse;
 import com.example.demo.security.JwtUtils;
+import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +14,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,6 +27,8 @@ public class AuthServiceImpl implements AuthService {
 
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * Authentifie l'administrateur et envoie les tokens via cookies HttpOnly.
@@ -69,6 +76,45 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthResponse checkAuth(String username) {
         return new AuthResponse("Authentifié", username, true);
+    }
+
+    @Override
+    public void changePassword(String username, ChangePasswordRequest request) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
+
+        // Vérifier l'ancien mot de passe
+        if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPasswordHash())) {
+            throw new RuntimeException("L'ancien mot de passe est incorrect");
+        }
+
+        // Mettre à jour le hash
+        user.setPasswordHash(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
+    }
+
+    @Override
+    public AuthResponse updateProfile(String currentUsername, UpdateProfileRequest request, HttpServletResponse response) {
+        User user = userRepository.findByUsername(currentUsername)
+                .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
+
+        String newUsername = request.getNewUsername();
+
+        if (userRepository.findByUsername(newUsername).isPresent() && !newUsername.equals(currentUsername)) {
+            throw new RuntimeException("Cet identifiant est déjà pris");
+        }
+
+        user.setUsername(newUsername);
+        userRepository.save(user);
+
+        // Puisque le username a changé, on doit régénérer les tokens JWT
+        String accessToken = jwtUtils.generateAccessToken(newUsername);
+        String refreshToken = jwtUtils.generateRefreshToken(newUsername);
+
+        addAccessTokenCookie(response, accessToken);
+        addRefreshTokenCookie(response, refreshToken);
+
+        return new AuthResponse("Profil mis à jour", newUsername, true);
     }
 
     // ============================================================

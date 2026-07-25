@@ -67,8 +67,12 @@ public class OrderServiceImpl implements OrderService {
         order.setTotalAmount(totalAmount);
         Order savedOrder = orderRepository.save(order);
 
-        // Envoyer email (asynchrone ou synchrone)
-        emailService.sendNewOrderEmail(savedOrder);
+        // Envoyer email sans bloquer la commande en cas d'erreur
+        try {
+            emailService.sendNewOrderEmail(savedOrder);
+        } catch (Exception e) {
+            System.err.println("Erreur lors de l'envoi de l'email: " + e.getMessage());
+        }
 
         return mapToResponse(savedOrder);
     }
@@ -92,7 +96,33 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponse updateOrderStatus(Long id, String status) {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Order", id));
+        
+        String oldStatus = order.getStatus();
         order.setStatus(status);
+
+        boolean isNowCancelledOrReturned = "ANNULEE".equals(status) || "RETOURNEE".equals(status);
+        boolean wasCancelledOrReturned = "ANNULEE".equals(oldStatus) || "RETOURNEE".equals(oldStatus);
+
+        // Si la commande est annulée ou retournée, on recrédite le stock
+        if (isNowCancelledOrReturned && !wasCancelledOrReturned) {
+            for (OrderItem item : order.getItems()) {
+                Product product = item.getProduct();
+                product.setStock(product.getStock() + item.getQuantity());
+                productRepository.save(product);
+            }
+        } 
+        // Si elle était annulée et qu'on la valide de nouveau, on décrémente le stock
+        else if (!isNowCancelledOrReturned && wasCancelledOrReturned) {
+            for (OrderItem item : order.getItems()) {
+                Product product = item.getProduct();
+                if (product.getStock() < item.getQuantity()) {
+                    throw new RuntimeException("Stock insuffisant pour rétablir la commande: " + product.getName());
+                }
+                product.setStock(product.getStock() - item.getQuantity());
+                productRepository.save(product);
+            }
+        }
+
         return mapToResponse(orderRepository.save(order));
     }
 

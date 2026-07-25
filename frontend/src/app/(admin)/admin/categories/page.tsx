@@ -4,6 +4,7 @@ import { AdminSidebar } from '@/components/admin/AdminSidebar';
 import { categoryApi } from '@/services/api';
 import type { Category } from '@/types/admin';
 import { Plus, Edit2, Trash2, CheckCircle, XCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 export default function AdminCategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -42,9 +43,10 @@ export default function AdminCategoriesPage() {
       }
       setIsEditing(null);
       setFormData({ name: '', slug: '', description: '' });
+      toast.success(isEditing ? 'Catégorie mise à jour avec succès' : 'Catégorie créée avec succès');
       await loadCategories();
     } catch (err) {
-      alert('Erreur lors de la sauvegarde.');
+      toast.error('Erreur lors de la sauvegarde de la catégorie.');
     } finally {
       setIsSubmitting(false);
     }
@@ -65,8 +67,9 @@ export default function AdminCategoriesPage() {
     try {
       await categoryApi.delete(id);
       setCategories(prev => prev.filter(c => c.id !== id));
+      toast.success('Catégorie supprimée avec succès.');
     } catch (e) {
-      alert('Impossible de supprimer cette catégorie. Elle est peut-être utilisée par des produits.');
+      toast.error('Impossible de supprimer cette catégorie. Elle est peut-être utilisée par des produits.');
     } finally {
       setDeletingId(null);
       setConfirmId(null);
@@ -180,7 +183,7 @@ export default function AdminCategoriesPage() {
                           {cat.description || <span className="italic opacity-50">Aucune description</span>}
                         </td>
                         <td className="px-6 py-4">
-                          <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <div className="flex items-center justify-end gap-2 transition-opacity">
                             <button
                               onClick={() => startEdit(cat)}
                               className="p-2 text-primary hover:text-secondary hover:bg-secondary/10 rounded-lg transition-colors"

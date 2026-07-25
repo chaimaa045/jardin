@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
 import { useAuth } from '@/hooks/useAuth';
-import { Shield, Key, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Shield, Key, CheckCircle, AlertCircle, Loader2, Lock, Eye, EyeOff } from 'lucide-react';
 import { authApi } from '@/services/api';
 
 export default function AdminSettingsPage() {
@@ -11,6 +11,10 @@ export default function AdminSettingsPage() {
   const [passwords, setPasswords] = useState({ current: '', new: '', confirm: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+  const [showPassword, setShowPassword] = useState({ current: false, new: false, confirm: false });
+  const [usernameForm, setUsernameForm] = useState({ newUsername: user?.username || '' });
+  const [isSubmittingProfile, setIsSubmittingProfile] = useState(false);
+  const [profileMessage, setProfileMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
   const handlePasswordChange = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,15 +26,37 @@ export default function AdminSettingsPage() {
     setIsSubmitting(true);
     setMessage(null);
     try {
-      // Simulation pour l'instant
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await authApi.updatePassword({
+        currentPassword: passwords.current,
+        newPassword: passwords.new
+      });
       
-      setMessage({ type: 'success', text: 'Le mot de passe a été mis à jour (simulation).' });
+      setMessage({ type: 'success', text: 'Le mot de passe a été mis à jour avec succès.' });
       setPasswords({ current: '', new: '', confirm: '' });
-    } catch (err) {
-      setMessage({ type: 'error', text: 'Erreur lors du changement de mot de passe.' });
+    } catch (err: any) {
+      setMessage({ type: 'error', text: err.message || 'Erreur lors du changement de mot de passe.' });
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleProfileChange = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!usernameForm.newUsername.trim()) return;
+
+    setIsSubmittingProfile(true);
+    setProfileMessage(null);
+    try {
+      const res = await authApi.updateProfile({
+        newUsername: usernameForm.newUsername
+      });
+      setProfileMessage({ type: 'success', text: 'Identifiant mis à jour.' });
+      // On rafraîchit la page pour forcer la mise à jour du contexte utilisateur
+      setTimeout(() => window.location.reload(), 1500);
+    } catch (err: any) {
+      setProfileMessage({ type: 'error', text: err.message || 'Erreur lors de la modification.' });
+    } finally {
+      setIsSubmittingProfile(false);
     }
   };
 
@@ -43,82 +69,149 @@ export default function AdminSettingsPage() {
           <p className="text-primary/60 mt-2">Informations du compte et configuration</p>
         </div>
 
-        <div className="max-w-3xl grid gap-8">
-          {/* Infos compte */}
-          <div className="bg-white border border-[#e5dfd5] rounded-3xl p-8 shadow-sm">
-            <h2 className="text-xl font-bold text-primary mb-6 flex items-center gap-2 font-serif">
-              <Shield className="w-5 h-5 text-secondary" />
-              Compte administrateur
-            </h2>
-            <div className="space-y-4">
-              <div className="flex justify-between items-center py-3 border-b border-[#e5dfd5]">
-                <span className="text-primary/60 font-semibold">Identifiant</span>
-                <span className="text-primary font-bold bg-surface px-4 py-1.5 rounded-lg border border-[#e5dfd5]">{user?.username || 'admin'}</span>
+        <div className="max-w-6xl grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          {/* Colonne Gauche: Infos compte */}
+          <div className="lg:col-span-1 space-y-8">
+            <div className="bg-white border border-[#e5dfd5] rounded-3xl p-8 shadow-sm relative overflow-hidden group">
+              <div className="absolute -right-10 -top-10 w-40 h-40 bg-secondary/5 rounded-full blur-3xl group-hover:bg-secondary/10 transition-colors"></div>
+              
+              <div className="w-16 h-16 bg-secondary/10 rounded-2xl flex items-center justify-center mb-6 border border-secondary/20 relative z-10">
+                <Shield className="w-8 h-8 text-secondary" />
               </div>
-              <div className="flex justify-between items-center py-3 border-b border-[#e5dfd5]">
-                <span className="text-primary/60 font-semibold">Rôle</span>
-                <span className="text-secondary font-bold text-sm bg-secondary/10 border border-secondary/20 px-4 py-1.5 rounded-full">
-                  Administrateur
-                </span>
+              
+              <h2 className="text-2xl font-bold text-primary mb-2 font-serif relative z-10">
+                Profil Admin
+              </h2>
+              <p className="text-sm text-primary/50 mb-6 relative z-10">Gérez vos accès et informations de sécurité de la boutique.</p>
+              
+              <div className="space-y-4 relative z-10">
+                <div className="bg-surface p-4 rounded-xl border border-[#e5dfd5]">
+                  <span className="text-primary/50 text-xs font-bold uppercase tracking-wider block mb-2">Changer l'identifiant</span>
+                  
+                  {profileMessage && (
+                    <div className={`mb-3 p-2 rounded-lg flex items-center gap-2 text-xs font-medium border ${
+                      profileMessage.type === 'success' 
+                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200' 
+                        : 'bg-red-50 text-red-600 border-red-200'
+                    }`}>
+                      {profileMessage.type === 'success' ? <CheckCircle className="w-4 h-4 shrink-0" /> : <AlertCircle className="w-4 h-4 shrink-0" />}
+                      <span>{profileMessage.text}</span>
+                    </div>
+                  )}
+
+                  <form onSubmit={handleProfileChange} className="flex gap-2">
+                    <input
+                      type="text" required value={usernameForm.newUsername} onChange={e => setUsernameForm({newUsername: e.target.value})}
+                      className="flex-1 bg-white border border-[#e5dfd5] text-primary font-bold rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary"
+                      placeholder={user?.username || 'admin'}
+                    />
+                    <button
+                      type="submit" disabled={isSubmittingProfile || usernameForm.newUsername === user?.username}
+                      className="bg-secondary text-white p-2 rounded-lg hover:bg-secondary/90 disabled:opacity-50 transition-colors flex items-center justify-center"
+                    >
+                      {isSubmittingProfile ? <Loader2 className="w-5 h-5 animate-spin" /> : <CheckCircle className="w-5 h-5" />}
+                    </button>
+                  </form>
+                </div>
+                <div className="bg-surface p-4 rounded-xl border border-[#e5dfd5]">
+                  <span className="text-primary/50 text-xs font-bold uppercase tracking-wider block mb-1">Rôle Système</span>
+                  <span className="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-700 font-bold text-xs px-3 py-1 rounded-full border border-emerald-200">
+                    <CheckCircle className="w-3 h-3" /> Administrateur
+                  </span>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Changer le mot de passe */}
-          <div className="bg-white border border-[#e5dfd5] rounded-3xl p-8 shadow-sm">
-            <h2 className="text-xl font-bold text-primary mb-6 flex items-center gap-2 font-serif">
-              <Key className="w-5 h-5 text-secondary" />
-              Changer le mot de passe
-            </h2>
+          {/* Colonne Droite: Changer le mot de passe */}
+          <div className="lg:col-span-2">
+            <div className="bg-white border border-[#e5dfd5] rounded-3xl p-8 shadow-sm h-full">
+              <h2 className="text-xl font-bold text-primary mb-6 flex items-center gap-2 font-serif">
+                <Key className="w-6 h-6 text-secondary" />
+                Sécurité du compte
+              </h2>
 
-            {message && (
-              <div className={`mb-6 p-4 rounded-xl flex items-center gap-3 text-sm font-medium border ${
-                message.type === 'success' 
-                  ? 'bg-emerald-50 text-emerald-700 border-emerald-200' 
-                  : 'bg-red-50 text-red-600 border-red-200'
-              }`}>
-                {message.type === 'success' ? <CheckCircle className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
-                {message.text}
-              </div>
-            )}
+              {message && (
+                <div className={`mb-8 p-4 rounded-xl flex items-start gap-3 text-sm font-medium border animate-in fade-in slide-in-from-top-2 ${
+                  message.type === 'success' 
+                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200' 
+                    : 'bg-red-50 text-red-600 border-red-200'
+                }`}>
+                  {message.type === 'success' ? <CheckCircle className="w-5 h-5 mt-0.5 shrink-0" /> : <AlertCircle className="w-5 h-5 mt-0.5 shrink-0" />}
+                  <p>{message.text}</p>
+                </div>
+              )}
 
-            <form onSubmit={handlePasswordChange} className="space-y-5">
-              <div>
-                <label className="block text-sm font-semibold text-primary mb-2">Mot de passe actuel</label>
-                <input
-                  type="password" required value={passwords.current} onChange={e => setPasswords({...passwords, current: e.target.value})}
-                  className="w-full bg-surface border border-[#e5dfd5] text-primary rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary"
-                  placeholder="••••••••"
-                />
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <form onSubmit={handlePasswordChange} className="space-y-6">
+                
+                {/* Current Password */}
                 <div>
-                  <label className="block text-sm font-semibold text-primary mb-2">Nouveau mot de passe</label>
-                  <input
-                    type="password" required value={passwords.new} onChange={e => setPasswords({...passwords, new: e.target.value})}
-                    className="w-full bg-surface border border-[#e5dfd5] text-primary rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary"
-                    placeholder="••••••••"
-                  />
+                  <label className="block text-sm font-bold text-primary mb-2">Mot de passe actuel</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <Lock className="h-5 w-5 text-primary/40" />
+                    </div>
+                    <input
+                      type={showPassword.current ? "text" : "password"} required value={passwords.current} onChange={e => setPasswords({...passwords, current: e.target.value})}
+                      className="w-full bg-surface border border-[#e5dfd5] text-primary rounded-xl pl-11 pr-12 py-3.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all"
+                      placeholder="••••••••"
+                    />
+                    <button type="button" onClick={() => setShowPassword(prev => ({...prev, current: !prev.current}))} className="absolute inset-y-0 right-0 pr-4 flex items-center text-primary/40 hover:text-secondary">
+                      {showPassword.current ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                    </button>
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-semibold text-primary mb-2">Confirmer le mot de passe</label>
-                  <input
-                    type="password" required value={passwords.confirm} onChange={e => setPasswords({...passwords, confirm: e.target.value})}
-                    className="w-full bg-surface border border-[#e5dfd5] text-primary rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary"
-                    placeholder="••••••••"
-                  />
+
+                <div className="border-t border-[#e5dfd5] pt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* New Password */}
+                  <div>
+                    <label className="block text-sm font-bold text-primary mb-2">Nouveau mot de passe</label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <Lock className="h-5 w-5 text-secondary/60" />
+                      </div>
+                      <input
+                        type={showPassword.new ? "text" : "password"} required value={passwords.new} onChange={e => setPasswords({...passwords, new: e.target.value})}
+                        className="w-full bg-surface border border-[#e5dfd5] text-primary rounded-xl pl-11 pr-12 py-3.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all"
+                        placeholder="••••••••"
+                      />
+                      <button type="button" onClick={() => setShowPassword(prev => ({...prev, new: !prev.new}))} className="absolute inset-y-0 right-0 pr-4 flex items-center text-primary/40 hover:text-secondary">
+                        {showPassword.new ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Confirm New Password */}
+                  <div>
+                    <label className="block text-sm font-bold text-primary mb-2">Confirmer le nouveau</label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <Lock className="h-5 w-5 text-secondary/60" />
+                      </div>
+                      <input
+                        type={showPassword.confirm ? "text" : "password"} required value={passwords.confirm} onChange={e => setPasswords({...passwords, confirm: e.target.value})}
+                        className="w-full bg-surface border border-[#e5dfd5] text-primary rounded-xl pl-11 pr-12 py-3.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all"
+                        placeholder="••••••••"
+                      />
+                      <button type="button" onClick={() => setShowPassword(prev => ({...prev, confirm: !prev.confirm}))} className="absolute inset-y-0 right-0 pr-4 flex items-center text-primary/40 hover:text-secondary">
+                        {showPassword.confirm ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="pt-2">
-                <button
-                  type="submit" disabled={isSubmitting}
-                  className="bg-secondary text-white font-bold py-3 px-8 rounded-xl hover:bg-secondary/90 transition-colors shadow-sm flex items-center justify-center gap-2"
-                >
-                  {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : <CheckCircle className="w-5 h-5" />}
-                  Enregistrer le mot de passe
-                </button>
-              </div>
-            </form>
+
+                <div className="pt-6">
+                  <button
+                    type="submit" disabled={isSubmitting}
+                    className="w-full sm:w-auto bg-secondary text-white font-bold py-3.5 px-8 rounded-xl hover:bg-secondary/90 disabled:opacity-70 transition-all shadow-sm flex items-center justify-center gap-2 group"
+                  >
+                    {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : <CheckCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />}
+                    Mettre à jour la sécurité
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
 
         </div>

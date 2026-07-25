@@ -17,7 +17,7 @@ export function AdminSidebar() {
   const { user, logout } = useAuth();
 
   return (
-    <aside className="w-64 bg-surface border-r border-[#e5dfd5] flex flex-col min-h-screen">
+    <aside className="w-64 bg-surface border-r border-[#e5dfd5] flex flex-col h-screen sticky top-0">
       {/* Logo */}
       <div className="p-6 border-b border-[#e5dfd5]">
         <div className="flex items-center gap-3">
@@ -32,7 +32,7 @@ export function AdminSidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-1">
+      <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
         {navigation.map((item) => {
           const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
           const Icon = item.icon;

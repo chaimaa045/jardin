@@ -1,6 +1,7 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Product, CartItem } from '@/types/shop';
+import { toast } from 'react-hot-toast';
 
 interface CartContextType {
   cart: CartItem[];
@@ -31,9 +32,18 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const addToCart = (product: Product, quantity: number = 1) => {
     setCart(prev => {
       const existing = prev.find(item => item.id === product.id);
-      if (existing) {
-        return prev.map(item => item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item);
+      const newQuantity = existing ? existing.quantity + quantity : quantity;
+      
+      if (product.stock !== undefined && newQuantity > product.stock) {
+        toast.error(`Stock insuffisant. Seulement ${product.stock} articles disponibles.`);
+        return prev;
       }
+
+      if (existing) {
+        toast.success(`Quantité mise à jour dans le panier`);
+        return prev.map(item => item.id === product.id ? { ...item, quantity: newQuantity } : item);
+      }
+      toast.success(`${product.name} ajouté au panier`);
       return [...prev, { ...product, quantity }];
     });
   };
@@ -48,6 +58,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (quantity <= 0) {
         return prev.filter(item => item.id !== id);
       }
+      
+      const item = prev.find(item => item.id === id);
+      if (item && item.stock !== undefined && quantity > item.stock) {
+        toast.error(`Stock insuffisant. Max: ${item.stock}`);
+        return prev;
+      }
+      
       return prev.map(item => item.id === id ? { ...item, quantity } : item);
     });
   };

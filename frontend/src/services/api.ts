@@ -84,6 +84,18 @@ export const authApi = {
     apiFetch<{ message: string; username: string; authenticated: boolean }>(
       '/api/admin/auth/me'
     ),
+
+  updatePassword: (data: any) =>
+    apiFetch<{ message: string; username: string; authenticated: boolean }>(
+      '/api/admin/auth/password',
+      { method: 'PUT', data }
+    ),
+
+  updateProfile: (data: any) =>
+    apiFetch<{ message: string; username: string; authenticated: boolean }>(
+      '/api/admin/auth/profile',
+      { method: 'PUT', data }
+    ),
 };
 
 // ============================================================

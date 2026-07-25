@@ -5,6 +5,7 @@ import { adminProductApi } from '@/services/api';
 import type { AdminProduct } from '@/types/admin';
 import Link from 'next/link';
 import { Plus, Edit2, Trash2, AlertCircle, Loader2, Star, CheckCircle } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<AdminProduct[]>([]);
@@ -31,9 +32,10 @@ export default function AdminProductsPage() {
     try {
       await adminProductApi.delete(id);
       setProducts(prev => prev.filter(p => p.id !== id));
+      toast.success('Produit supprimé avec succès.');
     } catch (e) {
       console.error(e);
-      alert('Erreur lors de la suppression.');
+      toast.error('Erreur lors de la suppression.');
     } finally {
       setDeletingId(null);
       setConfirmId(null);
@@ -139,7 +141,7 @@ export default function AdminProductsPage() {
                         )}
                       </td>
                       <td className="px-6 py-4">
-                        <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="flex items-center justify-end gap-2 transition-opacity">
                           <Link
                             href={`/admin/products/${product.id}`}
                             className="p-2 text-primary hover:text-secondary hover:bg-secondary/10 rounded-lg transition-colors"

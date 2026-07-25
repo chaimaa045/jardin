@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '@/app/globals.css';
+import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
   title: 'Administration — Souss Garden',
@@ -29,6 +30,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </head>
       <body suppressHydrationWarning className={`${inter.variable} antialiased bg-[#FAF8F5] text-[#212523] min-h-screen`}>
+        <Toaster position="top-right" />
         {children}
         <script
           dangerouslySetInnerHTML={{
