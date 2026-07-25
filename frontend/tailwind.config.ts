@@ -12,7 +12,7 @@ const config: Config = {
         primary: "#1A3626", // deep elegant green
         secondary: "#6A994E", // leaf green
         background: "#FDFBF7", // warm white
-        accent: "#D4AF37", // gold
+        accent: "#4CAF50", // vibrant garden green
         surface: "#F4F1EA", // section surface
         text: "#2C3E2C", // readable dark green-gray
         "primary-dark": "#0F2117",

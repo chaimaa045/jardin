@@ -79,12 +79,6 @@ export function HeroSection() {
                   {t('buttons.quote')}
                 </Button>
               </Link>
-              <Link href={`https://wa.me/${profile.company?.gsm?.replace(/^0/, '212')}`} target="_blank" className="w-full sm:w-auto">
-                <Button size="lg" variant="outline" className="rounded-2xl px-8 py-6 w-full sm:w-auto inline-flex items-center justify-center text-base font-semibold border-2 hover:bg-zinc-50 hover:-translate-y-1 transition-all duration-300"> 
-                  <MessageCircle className="mr-2 h-5 w-5 shrink-0 text-[#25D366]" /> 
-                  {t('buttons.whatsapp')}
-                </Button>
-              </Link>
             </div>
           </div>
         </div>

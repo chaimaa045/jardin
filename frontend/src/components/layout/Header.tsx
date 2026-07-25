@@ -69,13 +69,35 @@ export function Header() {
 
   return (
     <header className="fixed top-0 inset-x-0 z-40 pointer-events-auto">
+      {/* Top Bar - Very thin green bar */}
+      <div className="bg-primary text-white py-1.5 px-4 text-xs font-medium">
+        <div className="container mx-auto flex justify-between items-center">
+          <div className="flex items-center gap-4">
+            <a href={`tel:${telHref}`} className="flex items-center gap-1.5 hover:text-white/80 transition-colors">
+              <Phone className="w-3.5 h-3.5" />
+              <span dir="ltr">{profile?.company?.gsm}</span>
+            </a>
+          </div>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center gap-1.5 hover:text-white/80 transition-colors uppercase font-bold"
+              aria-label="Changer de langue"
+            >
+              <Globe className="w-3.5 h-3.5" />
+              {locale === "fr" ? t("buttons.switch_ar") : t("buttons.switch_fr")}
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div 
         className={cn(
           "pointer-events-auto transition-all duration-300 relative z-50",
-          "mt-3 mx-3 rounded-[2rem] md:mt-0 md:mx-0 md:rounded-none",
+          "mt-2 mx-3 rounded-[2rem] md:mt-2 md:mx-4 md:rounded-2xl lg:mt-3 lg:mx-auto lg:max-w-7xl",
           isScrolled 
-            ? "bg-white/95 backdrop-blur-md shadow-card py-2 md:py-3" 
-            : "bg-white/90 backdrop-blur-md shadow-lg md:shadow-none py-3 md:py-5"
+            ? "bg-white/95 backdrop-blur-md shadow-card py-2 md:py-3 border border-[#e5dfd5]" 
+            : "bg-white/90 backdrop-blur-md shadow-lg md:shadow-none py-3 md:py-4 border border-[#e5dfd5]/50"
         )}
       >
         <div className="container mx-auto px-4 md:px-6">
@@ -127,7 +149,7 @@ export function Header() {
               className="relative p-2 text-zinc-600 hover:text-secondary transition-colors"
               aria-label="Voir le panier"
             >
-              <ShoppingCart className="w-5 h-5" />
+              <ShoppingCart className="w-6 h-6" />
               {totalItems > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center font-bold">
                   {totalItems}
@@ -135,25 +157,9 @@ export function Header() {
               )}
             </Link>
 
-            <button
-              onClick={toggleLanguage}
-              className="flex items-center gap-1.5 text-sm font-bold hover:text-secondary transition-colors text-primary uppercase"
-              aria-label="Changer de langue"
-            >
-              <Globe className="w-4 h-4" />
-              {/* 4. Utilisation du traducteur pour le bouton */}
-              {locale === "fr" ? t("buttons.switch_ar") : t("buttons.switch_fr")}
-            </button>
-            <a
-              href={`tel:${telHref}`}
-              className="flex items-center gap-2 text-sm font-medium hover:text-secondary transition-colors text-primary whitespace-nowrap"
-            >
-              <Phone className="w-4 h-4" />
-              <span dir="ltr">{profile?.company?.gsm}</span>
-            </a>
             <Link
               href="/contact"
-              className={cn(buttonVariants({}), "rounded-full px-6 whitespace-nowrap inline-flex items-center justify-center")}
+              className={cn(buttonVariants({}), "rounded-full px-6 py-5 whitespace-nowrap inline-flex items-center justify-center shadow-md")}
             >
               {/* 5. Traduction du bouton devis */}
               {t("buttons.quote")}
@@ -220,25 +226,10 @@ export function Header() {
         </nav>
         
         <div className="mt-auto space-y-4 pt-8">
-          <button
-            onClick={toggleLanguage}
-            className="flex items-center justify-center gap-2 w-full py-4 bg-zinc-50 hover:bg-zinc-100 transition-colors rounded-xl text-primary font-medium uppercase"
-          >
-            <Globe className="w-5 h-5 text-secondary" />
-            {/* 6. Traduction du bouton mobile */}
-            {locale === "fr" ? t("buttons.switch_ar_mobile") : t("buttons.switch_fr_mobile")}
-          </button>
-          <a 
-            href={`tel:${telHref}`} 
-            className="flex items-center justify-center gap-2 w-full py-4 bg-zinc-50 hover:bg-zinc-100 transition-colors rounded-xl text-primary font-medium"
-          >
-            <Phone className="w-5 h-5 text-secondary" />
-            <span dir="ltr">{profile?.company?.gsm}</span>
-          </a>
           <Link 
             href="/contact" 
             onClick={() => setIsMobileMenuOpen(false)}
-            className={cn(buttonVariants({ size: 'lg' }), "w-full text-lg rounded-xl inline-flex items-center justify-center")}
+            className={cn(buttonVariants({ size: 'lg' }), "w-full text-lg rounded-xl inline-flex items-center justify-center shadow-md")}
           >
             {/* 7. Traduction du bouton devis mobile */}
             {t("buttons.quote_mobile")}

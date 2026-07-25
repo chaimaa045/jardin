@@ -110,9 +110,9 @@ export default function AdminDashboardPage() {
   // KPIs
   const lowStockProducts = products.filter(p => p.stock !== undefined && p.stock <= 5);
   const totalRevenue = orders
-    .filter(o => o.status === 'COMPLETED' || o.status === 'CONFIRMED')
+    .filter(o => o.status === 'LIVREE' || o.status === 'ACCEPTEE')
     .reduce((acc, o) => acc + o.totalAmount, 0);
-  const pendingOrders = orders.filter(o => o.status === 'PENDING');
+  const pendingOrders = orders.filter(o => o.status === 'NOUVELLE');
   const recentOrders = [...orders].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).slice(0, 5);
 
   // Données pour le Graphique des Revenus (7 derniers jours)
