@@ -74,7 +74,7 @@ export function MotionStaggerGrid({ children, className, id, style }: MotionStag
 
 export default function EditorialLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#F7F5F0] text-[#1A1A1A] antialiased">
+    <div className="min-h-screen text-[#1A1A1A] antialiased">
       {children}
     </div>
   );

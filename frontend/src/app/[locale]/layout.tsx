@@ -108,7 +108,7 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} dir={direction} className="scroll-smooth" data-scroll-behavior="smooth">
-      <body suppressHydrationWarning className={`${inter.variable} ${playfair.variable} antialiased min-h-screen flex flex-col bg-[#F7F5F0] text-[#1A1A1A] overflow-x-hidden`}> 
+      <body suppressHydrationWarning className={`${inter.variable} ${playfair.variable} antialiased min-h-screen flex flex-col text-[#1A1A1A] overflow-x-hidden`}> 
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
