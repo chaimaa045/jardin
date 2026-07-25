@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-const phoneRegex = /^(0|[+]212)[567]\d{8}$/;
+const phoneRegex = /^(?:(?:\+|00)212|0)\s*[5-7](?:\s*\d){8}$/;
 
 // 1. Notre schéma dynamique avec les traductions
 export const getContactFormSchema = (t: any) => z.object({

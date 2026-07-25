@@ -121,6 +121,8 @@ export default function CheckoutPage() {
               <label className="block text-sm font-semibold text-primary mb-2">Numéro de téléphone *</label>
               <input
                 type="tel" name="customerPhone" required value={formData.customerPhone} onChange={handleChange}
+                pattern="^(?:(?:\+|00)212|0)\s*[5-7](?:\s*\d){8}$"
+                title="Veuillez saisir un numéro de téléphone marocain valide (ex: 06 00 00 00 00 ou +212 6 00 00 00 00)"
                 className="w-full bg-surface border border-[#e5dfd5] text-primary rounded-xl px-4 py-3 focus:ring-2 focus:ring-secondary/50 focus:border-secondary outline-none"
                 placeholder="ex: 06 00 00 00 00"
               />
