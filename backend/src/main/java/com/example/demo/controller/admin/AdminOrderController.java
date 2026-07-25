@@ -36,4 +36,10 @@ public class AdminOrderController {
         }
         return ResponseEntity.ok(orderService.updateOrderStatus(id, status));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
+        orderService.deleteOrder(id);
+        return ResponseEntity.noContent().build();
+    }
 }

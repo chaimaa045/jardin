@@ -43,10 +43,10 @@ export default function AdminProductsPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex h-screen overflow-hidden bg-background">
       <AdminSidebar />
 
-      <main className="flex-1 p-8 overflow-auto">
+      <main className="flex-1 p-8 overflow-y-auto">
         {/* En-tête */}
         <div className="flex items-center justify-between mb-8">
           <div>

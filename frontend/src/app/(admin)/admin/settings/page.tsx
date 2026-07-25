@@ -61,9 +61,9 @@ export default function AdminSettingsPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex h-screen overflow-hidden bg-background">
       <AdminSidebar />
-      <main className="flex-1 p-8 overflow-auto">
+      <main className="flex-1 p-8 overflow-y-auto">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-primary font-serif">Paramètres</h1>
           <p className="text-primary/60 mt-2">Informations du compte et configuration</p>
@@ -87,32 +87,8 @@ export default function AdminSettingsPage() {
               
               <div className="space-y-4 relative z-10">
                 <div className="bg-surface p-4 rounded-xl border border-[#e5dfd5]">
-                  <span className="text-primary/50 text-xs font-bold uppercase tracking-wider block mb-2">Changer l'identifiant</span>
-                  
-                  {profileMessage && (
-                    <div className={`mb-3 p-2 rounded-lg flex items-center gap-2 text-xs font-medium border ${
-                      profileMessage.type === 'success' 
-                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200' 
-                        : 'bg-red-50 text-red-600 border-red-200'
-                    }`}>
-                      {profileMessage.type === 'success' ? <CheckCircle className="w-4 h-4 shrink-0" /> : <AlertCircle className="w-4 h-4 shrink-0" />}
-                      <span>{profileMessage.text}</span>
-                    </div>
-                  )}
-
-                  <form onSubmit={handleProfileChange} className="flex gap-2">
-                    <input
-                      type="text" required value={usernameForm.newUsername} onChange={e => setUsernameForm({newUsername: e.target.value})}
-                      className="flex-1 bg-white border border-[#e5dfd5] text-primary font-bold rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary"
-                      placeholder={user?.username || 'admin'}
-                    />
-                    <button
-                      type="submit" disabled={isSubmittingProfile || usernameForm.newUsername === user?.username}
-                      className="bg-secondary text-white p-2 rounded-lg hover:bg-secondary/90 disabled:opacity-50 transition-colors flex items-center justify-center"
-                    >
-                      {isSubmittingProfile ? <Loader2 className="w-5 h-5 animate-spin" /> : <CheckCircle className="w-5 h-5" />}
-                    </button>
-                  </form>
+                  <span className="text-primary/50 text-xs font-bold uppercase tracking-wider block mb-1">Identifiant Actuel</span>
+                  <span className="text-primary font-bold">{user?.username || 'admin'}</span>
                 </div>
                 <div className="bg-surface p-4 rounded-xl border border-[#e5dfd5]">
                   <span className="text-primary/50 text-xs font-bold uppercase tracking-wider block mb-1">Rôle Système</span>
@@ -124,9 +100,50 @@ export default function AdminSettingsPage() {
             </div>
           </div>
 
-          {/* Colonne Droite: Changer le mot de passe */}
-          <div className="lg:col-span-2">
-            <div className="bg-white border border-[#e5dfd5] rounded-3xl p-8 shadow-sm h-full">
+          {/* Colonne Droite: Formulaires */}
+          <div className="lg:col-span-2 space-y-8">
+            
+            {/* Changer l'identifiant */}
+            <div className="bg-white border border-[#e5dfd5] rounded-3xl p-8 shadow-sm">
+              <h2 className="text-xl font-bold text-primary mb-6 flex items-center gap-2 font-serif">
+                <Shield className="w-6 h-6 text-secondary" />
+                Changer l'identifiant
+              </h2>
+
+              {profileMessage && (
+                <div className={`mb-6 p-4 rounded-xl flex items-start gap-3 text-sm font-medium border animate-in fade-in slide-in-from-top-2 ${
+                  profileMessage.type === 'success' 
+                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200' 
+                    : 'bg-red-50 text-red-600 border-red-200'
+                }`}>
+                  {profileMessage.type === 'success' ? <CheckCircle className="w-5 h-5 mt-0.5 shrink-0" /> : <AlertCircle className="w-5 h-5 mt-0.5 shrink-0" />}
+                  <p>{profileMessage.text}</p>
+                </div>
+              )}
+
+              <form onSubmit={handleProfileChange} className="space-y-6">
+                <div>
+                  <label className="block text-sm font-bold text-primary mb-2">Nouvel identifiant</label>
+                  <input
+                    type="text" required value={usernameForm.newUsername} onChange={e => setUsernameForm({newUsername: e.target.value})}
+                    className="w-full bg-surface border border-[#e5dfd5] text-primary rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all"
+                    placeholder={user?.username || 'Nouveau nom'}
+                  />
+                </div>
+                <div className="pt-2">
+                  <button
+                    type="submit" disabled={isSubmittingProfile || usernameForm.newUsername === user?.username}
+                    className="w-full sm:w-auto bg-primary text-white font-bold py-3.5 px-8 rounded-xl hover:bg-primary/90 disabled:opacity-70 transition-all shadow-sm flex items-center justify-center gap-2 group"
+                  >
+                    {isSubmittingProfile ? <Loader2 className="w-5 h-5 animate-spin" /> : <CheckCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />}
+                    Mettre à jour l'identifiant
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            {/* Changer le mot de passe */}
+            <div className="bg-white border border-[#e5dfd5] rounded-3xl p-8 shadow-sm">
               <h2 className="text-xl font-bold text-primary mb-6 flex items-center gap-2 font-serif">
                 <Key className="w-6 h-6 text-secondary" />
                 Sécurité du compte

@@ -180,10 +180,10 @@ export default function AdminDashboardPage() {
   const statusData = getStatusData();
 
   return (
-    <div className="flex min-h-screen bg-[#FDFCFB]">
+    <div className="flex h-screen overflow-hidden bg-[#FDFCFB]">
       <AdminSidebar />
 
-      <main className="flex-1 p-8 lg:p-12 overflow-auto">
+      <main className="flex-1 p-8 lg:p-12 overflow-y-auto">
         {/* En-tête */}
         <motion.div 
           initial={{ opacity: 0, x: -20 }}

@@ -88,10 +88,10 @@ export default function AdminCategoriesPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex h-screen overflow-hidden bg-background">
       <AdminSidebar />
 
-      <main className="flex-1 p-8 overflow-auto">
+      <main className="flex-1 p-8 overflow-y-auto relative">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-primary font-serif">Catégories</h1>
           <p className="text-primary/60 mt-2">Gérez les catégories de vos produits</p>

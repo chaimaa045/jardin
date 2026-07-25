@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
 import { orderApi } from '@/services/api';
 import type { Order } from '@/types/admin';
-import { Loader2, ShoppingBag, User, Phone, MapPin, Eye, AlertCircle, ChevronDown, Package } from 'lucide-react';
+import { Loader2, ShoppingBag, User, Phone, MapPin, Eye, AlertCircle, ChevronDown, Package, Trash2, Printer } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 
 export default function AdminOrdersPage() {
@@ -15,6 +15,10 @@ export default function AdminOrdersPage() {
     newStatus: ''
   });
   const [expandedOrder, setExpandedOrder] = useState<number | null>(null);
+  const [deleteConfirmModal, setDeleteConfirmModal] = useState<{isOpen: boolean, orderId: number | null}>({
+    isOpen: false,
+    orderId: null
+  });
 
   const toggleOrder = (id: number) => {
     setExpandedOrder(prev => prev === id ? null : id);
@@ -47,6 +51,19 @@ export default function AdminOrdersPage() {
     }
   };
 
+  const confirmDeleteOrder = async () => {
+    if (deleteConfirmModal.orderId === null) return;
+    try {
+      await orderApi.delete(deleteConfirmModal.orderId);
+      toast.success('Commande supprimée avec succès.');
+      await loadOrders();
+    } catch (e) {
+      toast.error('Erreur lors de la suppression de la commande.');
+    } finally {
+      setDeleteConfirmModal({ isOpen: false, orderId: null });
+    }
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'NOUVELLE': return 'bg-orange-100 text-orange-700 border-orange-200';
@@ -70,10 +87,10 @@ export default function AdminOrdersPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex h-screen overflow-hidden bg-background">
       <AdminSidebar />
 
-      <main className="flex-1 p-8 overflow-auto">
+      <main className="flex-1 p-8 overflow-y-auto">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-primary font-serif">Commandes</h1>
           <p className="text-primary/60 mt-2">Gérez les commandes de vos clients</p>
@@ -138,6 +155,22 @@ export default function AdminOrdersPage() {
                       title={expandedOrder === order.id ? "Masquer les détails" : "Voir les détails"}
                     >
                       <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${expandedOrder === order.id ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    <button 
+                      onClick={() => window.open(`/admin/orders/${order.id}/print`, '_blank')}
+                      className={`p-2.5 rounded-xl transition-colors border ${order.status === 'ACCEPTEE' ? 'bg-secondary text-white border-secondary hover:bg-secondary/90' : 'bg-surface hover:bg-[#e5dfd5] border-[#e5dfd5] text-primary'}`}
+                      title="Imprimer le reçu de livraison"
+                    >
+                      <Printer className="w-5 h-5" />
+                    </button>
+                    
+                    <button 
+                      onClick={() => setDeleteConfirmModal({ isOpen: true, orderId: order.id })}
+                      className="p-2.5 bg-red-50 hover:bg-red-100 rounded-xl transition-colors border border-red-200 text-red-600"
+                      title="Supprimer la commande"
+                    >
+                      <Trash2 className="w-5 h-5" />
                     </button>
                   </div>
                 </div>
@@ -254,6 +287,39 @@ export default function AdminOrdersPage() {
                 className="flex-1 py-3 px-4 rounded-xl font-bold text-white bg-secondary hover:bg-secondary/90 transition-colors shadow-md"
               >
                 Confirmer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Modal de Confirmation Supression */}
+      {deleteConfirmModal.isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-primary/40 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-xl">
+            <div className="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Trash2 className="w-8 h-8" />
+            </div>
+            
+            <h3 className="text-2xl font-bold text-primary font-serif text-center mb-2">
+              Supprimer la commande
+            </h3>
+            
+            <p className="text-center text-primary/70 mb-8">
+              Voulez-vous vraiment supprimer la commande <span className="font-bold">#{deleteConfirmModal.orderId}</span> ? Cette action est irréversible. Le stock ne sera recrédité que si la commande n'était pas déjà annulée.
+            </p>
+            
+            <div className="flex gap-4">
+              <button 
+                onClick={() => setDeleteConfirmModal({ isOpen: false, orderId: null })}
+                className="flex-1 py-3 px-4 rounded-xl font-bold text-primary bg-surface hover:bg-[#e5dfd5] transition-colors"
+              >
+                Annuler
+              </button>
+              <button 
+                onClick={confirmDeleteOrder}
+                className="flex-1 py-3 px-4 rounded-xl font-bold text-white bg-red-600 hover:bg-red-700 transition-colors shadow-md"
+              >
+                Supprimer
               </button>
             </div>
           </div>

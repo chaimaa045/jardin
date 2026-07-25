@@ -274,16 +274,6 @@ function ProductFormContent({ productId }: ProductFormPageProps) {
               )}
             </div>
             
-            {/* Fallback URL manuelle (caché ou optionnel) */}
-            <div className="mt-4">
-              <label className="text-xs text-primary/50 mb-1 block">Ou collez une URL d'image :</label>
-              <input
-                name="imageUrl" value={form.imageUrl} onChange={handleChange}
-                placeholder="https://..."
-                className="w-full bg-surface border border-[#e5dfd5] text-primary/70 text-sm rounded-lg px-3 py-2
-                           focus:outline-none focus:border-secondary"
-              />
-            </div>
           </div>
 
           <div>

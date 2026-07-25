@@ -139,6 +139,8 @@ export const orderApi = {
   getAdminById: (id: number) => apiFetch<Order>(`/api/admin/orders/${id}`),
   updateStatus: (id: number, status: string) =>
     apiFetch<Order>(`/api/admin/orders/${id}/status`, { method: 'PUT', data: { status } }),
+  delete: (id: number) =>
+    apiFetch<void>(`/api/admin/orders/${id}`, { method: 'DELETE' }),
 };
 
 // ============================================================

@@ -126,6 +126,27 @@ public class OrderServiceImpl implements OrderService {
         return mapToResponse(orderRepository.save(order));
     }
 
+    @Override
+    @Transactional
+    public void deleteOrder(Long id) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Order", id));
+        
+        String status = order.getStatus();
+        boolean wasCancelledOrReturned = "ANNULEE".equals(status) || "RETOURNEE".equals(status);
+
+        // Si la commande n'était pas annulée/retournée, on recrédite le stock avant de supprimer
+        if (!wasCancelledOrReturned) {
+            for (OrderItem item : order.getItems()) {
+                Product product = item.getProduct();
+                product.setStock(product.getStock() + item.getQuantity());
+                productRepository.save(product);
+            }
+        }
+        
+        orderRepository.delete(order);
+    }
+
     private OrderResponse mapToResponse(Order order) {
         return OrderResponse.builder()
                 .id(order.getId())
