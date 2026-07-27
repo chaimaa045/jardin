@@ -37,37 +37,35 @@ export default function ShopPage() {
     : products.filter(p => p.category?.id === activeCategoryId);
 
   return (
-    <div className="container mx-auto px-4 py-16 sm:py-24">
-      <SectionTitle 
-        title="Notre Boutique" 
-        subtitle="Catalogue"
+    <div className="container mx-auto px-4 pt-32 pb-16 sm:pt-40 sm:pb-24">
+      <SectionTitle
+        title="Notre Boutique"
+        subtitle=""
         description="Découvrez notre sélection de plantes, outils et accessoires pour sublimer votre jardin."
-        centered 
+        centered
       />
-      
+
       {/* Menu des filtres */}
       {!isLoading && categories.length > 0 && (
         <div className="flex flex-wrap justify-center gap-3 mb-12">
           <button
             onClick={() => setActiveCategoryId('ALL')}
-            className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ease-in-out focus:outline-none ${
-              activeCategoryId === 'ALL'
-                ? "bg-secondary text-white shadow-md shadow-secondary/20 border border-secondary"
-                : "bg-white text-primary hover:bg-surface border border-[#e5dfd5]"
-            }`}
+            className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ease-in-out focus:outline-none ${activeCategoryId === 'ALL'
+              ? "bg-secondary text-white shadow-md shadow-secondary/20 border border-secondary"
+              : "bg-white text-primary hover:bg-surface border border-[#e5dfd5]"
+              }`}
           >
             Toutes les catégories
           </button>
-          
+
           {categories.map(category => (
             <button
               key={category.id}
               onClick={() => setActiveCategoryId(category.id)}
-              className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ease-in-out focus:outline-none ${
-                activeCategoryId === category.id
-                  ? "bg-secondary text-white shadow-md shadow-secondary/20 border border-secondary"
-                  : "bg-white text-primary hover:bg-surface border border-[#e5dfd5]"
-              }`}
+              className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ease-in-out focus:outline-none ${activeCategoryId === category.id
+                ? "bg-secondary text-white shadow-md shadow-secondary/20 border border-secondary"
+                : "bg-white text-primary hover:bg-surface border border-[#e5dfd5]"
+                }`}
             >
               {category.name}
             </button>

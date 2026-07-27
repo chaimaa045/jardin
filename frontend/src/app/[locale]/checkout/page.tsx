@@ -56,7 +56,7 @@ export default function CheckoutPage() {
 
   if (success) {
     return (
-      <div className="container mx-auto px-4 py-24 text-center max-w-2xl">
+      <div className="container mx-auto px-4 pt-32 pb-24 text-center max-w-2xl">
         <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
           <span className="text-4xl">✅</span>
         </div>
@@ -67,7 +67,7 @@ export default function CheckoutPage() {
         </p>
         <button 
           onClick={() => router.push('/shop')}
-          className="bg-secondary text-white px-8 py-3 rounded-full font-bold hover:bg-secondary/90 transition-colors"
+          className="bg-accent text-white px-8 py-3 rounded-full font-bold hover:bg-accent/90 transition-colors"
         >
           Retour à la boutique
         </button>
@@ -77,11 +77,11 @@ export default function CheckoutPage() {
 
   if (cart.length === 0) {
     return (
-      <div className="container mx-auto px-4 py-24 text-center">
+      <div className="container mx-auto px-4 pt-32 pb-24 text-center">
         <h1 className="text-2xl font-bold text-primary mb-4">Votre panier est vide</h1>
         <button 
           onClick={() => router.push('/shop')}
-          className="bg-secondary text-white px-8 py-3 rounded-full font-bold hover:bg-secondary/90 transition-colors"
+          className="bg-accent text-white px-8 py-3 rounded-full font-bold hover:bg-accent/90 transition-colors"
         >
           Découvrir nos produits
         </button>
@@ -90,7 +90,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-16 sm:py-24 max-w-5xl">
+    <div className="container mx-auto px-4 pt-32 pb-16 sm:pt-40 sm:pb-24 max-w-5xl">
       <SectionTitle 
         title="Finaliser la commande" 
         subtitle="Paiement à la livraison"
@@ -142,7 +142,7 @@ export default function CheckoutPage() {
 
             <button
               type="submit" disabled={isSubmitting}
-              className="w-full bg-secondary text-white py-4 rounded-xl font-bold hover:bg-secondary/90 transition-colors shadow-md disabled:opacity-70 disabled:cursor-not-allowed"
+              className="w-full bg-accent text-white py-4 rounded-xl font-bold hover:bg-accent/90 transition-colors shadow-md disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {isSubmitting ? 'Traitement en cours...' : 'Confirmer ma commande'}
             </button>
@@ -228,7 +228,7 @@ export default function CheckoutPage() {
               </button>
               <button 
                 onClick={confirmAndSubmitOrder}
-                className="flex-1 py-3 px-4 rounded-xl font-bold text-white bg-secondary hover:bg-secondary/90 transition-colors shadow-md"
+                className="flex-1 py-3 px-4 rounded-xl font-bold text-white bg-accent hover:bg-accent/90 transition-colors shadow-md"
               >
                 Oui, je confirme
               </button>

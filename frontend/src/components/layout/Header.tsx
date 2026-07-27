@@ -70,7 +70,7 @@ export function Header() {
   return (
     <header className="fixed top-0 inset-x-0 z-40 pointer-events-auto">
       {/* Top Bar - Thin soft green bar, attached to nav */}
-      <div className="bg-accent text-white py-1.5 px-4 text-xs font-medium">
+      <div className="bg-[#4a9090] text-white py-1.5 px-4 text-xs font-medium">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center gap-4">
             <a href={`tel:${telHref}`} className="flex items-center gap-1.5 hover:text-white/80 transition-colors">
@@ -159,7 +159,7 @@ export function Header() {
 
             <Link
               href="/contact"
-              className={cn(buttonVariants({}), "rounded-full px-6 py-5 whitespace-nowrap inline-flex items-center justify-center shadow-md")}
+              className={cn(buttonVariants({}), "bg-accent hover:bg-accent/90 text-white rounded-full px-6 py-5 whitespace-nowrap inline-flex items-center justify-center shadow-md")}
             >
               {/* 5. Traduction du bouton devis */}
               {t("buttons.quote")}
@@ -229,7 +229,7 @@ export function Header() {
           <Link 
             href="/contact" 
             onClick={() => setIsMobileMenuOpen(false)}
-            className={cn(buttonVariants({ size: 'lg' }), "w-full text-lg rounded-xl inline-flex items-center justify-center shadow-md")}
+            className={cn(buttonVariants({ size: 'lg' }), "bg-accent hover:bg-accent/90 text-white w-full text-lg rounded-xl inline-flex items-center justify-center shadow-md")}
           >
             {/* 7. Traduction du bouton devis mobile */}
             {t("buttons.quote_mobile")}
