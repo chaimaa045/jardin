@@ -290,7 +290,7 @@ export default function AdminDashboardPage() {
               <h2 className="text-xl font-bold text-primary font-serif">Statuts des commandes</h2>
               <p className="text-sm text-primary/50">Répartition globale</p>
             </div>
-            <div className="h-[220px] w-full flex-1 relative">
+            <div className="h-[250px] w-full flex-1 relative mt-2">
               {!isLoading && (
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -298,8 +298,8 @@ export default function AdminDashboardPage() {
                       data={statusData}
                       cx="50%"
                       cy="50%"
-                      innerRadius={60}
-                      outerRadius={80}
+                      innerRadius={70}
+                      outerRadius={90}
                       paddingAngle={5}
                       dataKey="value"
                       stroke="none"
@@ -316,12 +316,12 @@ export default function AdminDashboardPage() {
                 </ResponsiveContainer>
               )}
               {/* Centre du Donut */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                <span className="text-2xl font-black text-primary">{orders.length}</span>
-                <span className="text-[10px] uppercase font-bold text-primary/40 tracking-wider">Total</span>
+              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none -mt-2">
+                <span className="text-3xl font-black text-primary">{orders.length}</span>
+                <span className="text-xs uppercase font-bold text-primary/40 tracking-wider mt-1">Total</span>
               </div>
             </div>
-            <div className="mt-4 grid grid-cols-2 gap-2">
+            <div className="mt-6 grid grid-cols-2 gap-3">
               {statusData.map((stat, i) => (
                 <div key={i} className="flex items-center gap-2 text-xs font-semibold text-primary/70">
                   <div className="w-3 h-3 rounded-full" style={{ backgroundColor: stat.color }}></div>

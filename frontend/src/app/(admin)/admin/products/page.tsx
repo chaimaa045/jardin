@@ -13,6 +13,15 @@ export default function AdminProductsPage() {
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [confirmId, setConfirmId] = useState<number | null>(null);
 
+  // Helper pour corriger les URLs doublement préfixées par erreur (ex: http://localhost:8080https://...)
+  const getCleanImageUrl = (url: string | undefined | null) => {
+    if (!url) return '';
+    if (url.includes('http') && url.lastIndexOf('http') > 0) {
+      return url.substring(url.lastIndexOf('http'));
+    }
+    return url.startsWith('http') || url.startsWith('/') ? url : `/${url}`;
+  };
+
   const loadProducts = async () => {
     setIsLoading(true);
     try {
@@ -101,7 +110,7 @@ export default function AdminProductsPage() {
                         <div className="flex items-center gap-4">
                           {product.imageUrl ? (
                             <img 
-                              src={product.imageUrl.startsWith('http') || product.imageUrl.startsWith('/') ? product.imageUrl : `/${product.imageUrl}`} 
+                              src={getCleanImageUrl(product.imageUrl)} 
                               alt={product.name} 
                               className="w-12 h-12 rounded-lg object-cover border border-[#e5dfd5]" 
                             />

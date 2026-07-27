@@ -4,7 +4,7 @@ import '@/app/globals.css';
 import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
-  title: 'Administration — Souss Garden',
+  title: 'Administration — FLORA DECOR',
   description: 'Espace administrateur privé',
   robots: 'noindex, nofollow', // Ne jamais indexer l'admin
 };

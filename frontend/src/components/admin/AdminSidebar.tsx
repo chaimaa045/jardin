@@ -25,7 +25,7 @@ export function AdminSidebar() {
             <Leaf className="w-5 h-5 text-white" />
           </div>
           <div>
-            <p className="font-bold text-primary text-sm font-serif">Souss Garden</p>
+            <p className="font-bold text-primary text-sm font-serif">FLORA DECOR</p>
             <p className="text-xs text-secondary/70">Administration</p>
           </div>
         </div>

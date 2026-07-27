@@ -84,9 +84,11 @@ function ProductFormContent({ productId }: ProductFormPageProps) {
       const response = await uploadApi.uploadFile(file);
       // L'API renvoie { url: "/uploads/xyz.jpg" }, on l'ajoute au chemin absolu si besoin,
       // ou on utilise juste le chemin relatif car le backend le sert sur /uploads/
-      const fileUrl = process.env.NEXT_PUBLIC_API_URL 
-        ? `${process.env.NEXT_PUBLIC_API_URL}${response.url}`
-        : `http://localhost:8080${response.url}`;
+      const fileUrl = response.url.startsWith('http') 
+        ? response.url 
+        : (process.env.NEXT_PUBLIC_API_URL 
+            ? `${process.env.NEXT_PUBLIC_API_URL}${response.url}`
+            : `http://localhost:8080${response.url}`);
         
       setForm(prev => ({ ...prev, imageUrl: fileUrl }));
     } catch (err) {

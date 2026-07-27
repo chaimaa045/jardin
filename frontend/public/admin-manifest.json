@@ -1,7 +1,7 @@
 {
-  "name": "Souss Garden Admin",
+  "name": "FLORA DECOR Admin",
   "short_name": "SG Admin",
-  "description": "Espace d'administration pour Souss Garden",
+  "description": "Espace d'administration pour FLORA DECOR",
   "start_url": "/admin/dashboard",
   "display": "standalone",
   "background_color": "#030712",

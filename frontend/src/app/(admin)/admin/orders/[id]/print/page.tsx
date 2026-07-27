@@ -173,7 +173,7 @@ export default function OrderPrintPage() {
         {/* Footer text */}
         <div className="mt-8 print:mt-6 text-center text-xs print:text-[10px] text-gray-400">
           <p>Merci pour votre confiance. En cas de réclamation, veuillez nous contacter sous 48h.</p>
-          <p className="mt-1">Souss Garden © {new Date().getFullYear()} - Document généré électroniquement</p>
+          <p className="mt-1">FLORA DECOR © {new Date().getFullYear()} - Document généré électroniquement</p>
         </div>
 
       </div>

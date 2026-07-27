@@ -13,6 +13,15 @@ export default function ProductCard({ product }: Props) {
   const { cart, addToCart } = useCart();
   const router = useRouter();
 
+  // Helper pour corriger les URLs doublement préfixées par erreur (ex: http://localhost:8080https://...)
+  const getCleanImageUrl = (url: string | undefined | null) => {
+    if (!url) return '';
+    if (url.includes('http') && url.lastIndexOf('http') > 0) {
+      return url.substring(url.lastIndexOf('http'));
+    }
+    return url.startsWith('http') || url.startsWith('/') ? url : `/${url}`;
+  };
+
   const handleBuy = () => {
     // Si le produit n'est pas déjà dans le panier, on l'ajoute
     const isAlreadyInCart = cart.some(item => item.id === product.id);
@@ -27,7 +36,7 @@ export default function ProductCard({ product }: Props) {
       <Link href={`/shop/${product.id}`} className="block relative h-80 w-full mb-4 rounded-2xl overflow-hidden bg-surface flex items-center justify-center p-2 group-hover:bg-[#efece5] transition-colors">
         {product.imageUrl ? (
           <Image 
-            src={product.imageUrl.startsWith('http') || product.imageUrl.startsWith('/') ? product.imageUrl : `/${product.imageUrl}`} 
+            src={getCleanImageUrl(product.imageUrl)} 
             alt={product.name} 
             fill 
             className="object-contain p-2 group-hover:scale-110 transition-transform duration-500" 
