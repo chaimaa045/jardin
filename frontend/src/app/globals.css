@@ -6,9 +6,6 @@ html, body {
   overflow-x: hidden;
   position: relative;
   background-color: var(--color-background);
-  background-image: url("data:image/svg+xml,%3Csvg width='300' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%235B9A6F' fill-opacity='0.15'%3E%3Cpath d='M60 15 C30 5, 10 50, 60 90 C110 50, 90 5, 60 15Z'/%3E%3Cpath d='M220 50 C195 40, 175 75, 215 110 C255 78, 240 40, 220 50Z'/%3E%3Cpath d='M40 180 C18 170, 5 200, 38 230 C68 203, 55 170, 40 180Z'/%3E%3Cpath d='M260 200 C240 192, 225 220, 255 248 C282 223, 272 192, 260 200Z'/%3E%3Cpath d='M150 120 C125 108, 108 145, 148 178 C185 148, 168 108, 150 120Z'/%3E%3Cpath d='M150 20 L150 60 M130 35 C140 30, 150 40, 150 40 M170 25 C160 22, 150 35, 150 35' stroke='%235B9A6F' stroke-opacity='0.15' stroke-width='1.5' fill='none'/%3E%3Cpath d='M80 260 L95 290 M75 272 C82 268, 90 278, 90 278' stroke='%235B9A6F' stroke-opacity='0.15' stroke-width='1.5' fill='none'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: 300px 300px;
-  background-attachment: fixed;
 }
 
 #__next {
