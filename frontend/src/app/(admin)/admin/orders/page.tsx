@@ -5,6 +5,7 @@ import { orderApi } from '@/services/api';
 import type { Order } from '@/types/admin';
 import { Loader2, ShoppingBag, User, Phone, MapPin, Eye, AlertCircle, ChevronDown, Package, Trash2, Printer } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import Link from 'next/link';
 
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -157,13 +158,15 @@ export default function AdminOrdersPage() {
                       <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${expandedOrder === order.id ? 'rotate-180' : ''}`} />
                     </button>
 
-                    <button 
-                      onClick={() => window.open(`/admin/orders/${order.id}/print`, '_blank')}
-                      className={`p-2.5 rounded-xl transition-colors border ${order.status === 'ACCEPTEE' ? 'bg-secondary text-white border-secondary hover:bg-secondary/90' : 'bg-surface hover:bg-[#e5dfd5] border-[#e5dfd5] text-primary'}`}
+                    <a 
+                      href={`/admin/orders/${order.id}/print`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`inline-flex p-2.5 rounded-xl transition-colors border ${order.status === 'ACCEPTEE' ? 'bg-secondary text-white border-secondary hover:bg-secondary/90' : 'bg-surface hover:bg-[#e5dfd5] border-[#e5dfd5] text-primary'}`}
                       title="Imprimer le reçu de livraison"
                     >
                       <Printer className="w-5 h-5" />
-                    </button>
+                    </a>
                     
                     <button 
                       onClick={() => setDeleteConfirmModal({ isOpen: true, orderId: order.id })}
