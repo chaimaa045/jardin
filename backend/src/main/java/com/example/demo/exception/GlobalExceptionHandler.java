@@ -65,6 +65,19 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * Gestion des conflits d'intégrité référentielle (ex: suppression d'un produit lié à une commande)
+     */
+    @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
+    public ResponseEntity<Map<String, Object>> handleDataIntegrityViolationException(org.springframework.dao.DataIntegrityViolationException ex) {
+        Map<String, Object> response = buildErrorResponse(
+                HttpStatus.BAD_REQUEST,
+                "Impossible de supprimer cet élément car il est lié à d'autres enregistrements (ex: commandes).",
+                null
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    /**
      * Gestion des autres erreurs internes (500)
      */
     @ExceptionHandler(Exception.class)

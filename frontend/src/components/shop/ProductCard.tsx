@@ -5,6 +5,7 @@ import { Product } from '@/types/shop';
 import { useCart } from '@/hooks/useCart';
 import { useState } from 'react';
 import { ShoppingBag, CheckCircle2 } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 interface Props {
   product: Product;
@@ -27,6 +28,10 @@ export default function ProductCard({ product }: Props) {
     const isAlreadyInCart = cart.some(item => item.id === product.id);
     if (!isAlreadyInCart) {
       addToCart(product);
+      toast.success(`${product.name} ajouté au panier !`, {
+        duration: 3000,
+        position: 'bottom-center',
+      });
     }
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 2000);

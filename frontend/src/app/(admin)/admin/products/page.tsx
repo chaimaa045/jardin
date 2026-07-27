@@ -42,9 +42,9 @@ export default function AdminProductsPage() {
       await adminProductApi.delete(id);
       setProducts(prev => prev.filter(p => p.id !== id));
       toast.success('Produit supprimé avec succès.');
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
-      toast.error('Erreur lors de la suppression.');
+      toast.error(e.message || 'Erreur lors de la suppression.');
     } finally {
       setDeletingId(null);
       setConfirmId(null);

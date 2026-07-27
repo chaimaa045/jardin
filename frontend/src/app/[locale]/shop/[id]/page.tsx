@@ -7,6 +7,7 @@ import { publicApi } from '@/services/api';
 import { useCart } from '@/hooks/useCart';
 import { Product } from '@/types/shop';
 import { ArrowLeft, ShoppingBag, Leaf, CheckCircle2 } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 export default function ProductDetailsPage() {
   const params = useParams();
@@ -68,6 +69,10 @@ export default function ProductDetailsPage() {
   const handleAddToCart = () => {
     addToCart(product, quantity);
     setIsAdded(true);
+    toast.success(`${product.name} ajouté au panier !`, {
+      duration: 3000,
+      position: 'bottom-center',
+    });
     setTimeout(() => setIsAdded(false), 2000);
   };
 
@@ -77,9 +82,9 @@ export default function ProductDetailsPage() {
         <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" /> Retour à la boutique
       </Link>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
         {/* Colonne Image */}
-        <div className="bg-white border border-[#e5dfd5] rounded-[3rem] p-8 lg:p-12 shadow-sm flex items-center justify-center aspect-square relative group overflow-hidden">
+        <div className="bg-white border border-[#e5dfd5] rounded-3xl p-6 lg:p-8 shadow-sm flex items-center justify-center aspect-square lg:aspect-[4/3] max-h-[500px] relative group overflow-hidden">
           {product.imageUrl ? (
             <Image 
               src={product.imageUrl.startsWith('http') || product.imageUrl.startsWith('/') ? product.imageUrl : `/${product.imageUrl}`} 
@@ -102,22 +107,22 @@ export default function ProductDetailsPage() {
             </span>
           </div>
           
-          <h1 className="text-4xl lg:text-5xl font-bold text-primary font-serif mb-6 leading-tight">
+          <h1 className="text-3xl lg:text-4xl font-bold text-primary font-serif mb-4 leading-tight">
             {product.name}
           </h1>
           
-          <div className="text-3xl font-bold text-secondary mb-8">
+          <div className="text-2xl font-bold text-secondary mb-6">
             {product.price.toFixed(2)} DH
           </div>
 
-          <div className="prose prose-lg prose-p:text-primary/70 mb-10">
+          <div className="prose prose-base prose-p:text-primary/70 mb-8">
             <h3 className="text-lg font-bold text-primary mb-3">Description</h3>
             <p className="leading-relaxed whitespace-pre-wrap">
               {product.description || 'Aucune description disponible pour ce produit. Il s\'agit d\'une magnifique plante de qualité sélectionnée par nos paysagistes experts.'}
             </p>
           </div>
 
-          <div className="bg-surface border border-[#e5dfd5] rounded-3xl p-6 mb-10 flex gap-4 text-primary/80">
+          <div className="bg-surface border border-[#e5dfd5] rounded-2xl p-5 mb-8 flex gap-4 text-primary/80">
             <div className="flex-1">
               <p className="text-xs uppercase tracking-wider mb-1 font-bold opacity-60">Disponibilité</p>
               <p className="font-semibold flex items-center gap-2">
