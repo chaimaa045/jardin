@@ -69,10 +69,6 @@ export default function ProductDetailsPage() {
   const handleAddToCart = () => {
     addToCart(product, quantity);
     setIsAdded(true);
-    toast.success(`${product.name} ajouté au panier !`, {
-      duration: 3000,
-      position: 'bottom-center',
-    });
     setTimeout(() => setIsAdded(false), 2000);
   };
 

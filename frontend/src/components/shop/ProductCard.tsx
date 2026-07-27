@@ -28,10 +28,6 @@ export default function ProductCard({ product }: Props) {
     const isAlreadyInCart = cart.some(item => item.id === product.id);
     if (!isAlreadyInCart) {
       addToCart(product);
-      toast.success(`${product.name} ajouté au panier !`, {
-        duration: 3000,
-        position: 'bottom-center',
-      });
     }
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 2000);
