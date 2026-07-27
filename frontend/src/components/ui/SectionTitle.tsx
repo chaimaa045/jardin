@@ -6,6 +6,7 @@ interface SectionTitleProps {
   className?: string;
   centered?: boolean;
   description?: string;
+  variant?: 'default' | 'light' | 'mixed';
 }
 
 export function SectionTitle({ 
@@ -13,22 +14,28 @@ export function SectionTitle({
   subtitle, 
   className, 
   centered = false,
-  description // 1. Ajout de la prop ici
+  description,
+  variant = 'default'
 }: SectionTitleProps) {
+  const isLight = variant === 'light';
+  const isMixed = variant === 'mixed';
+  
   return (
     <div className={cn("mb-12", centered && "text-center", className)}>
       {subtitle && (
-        <span className="text-secondary font-semibold tracking-wider uppercase text-sm mb-3 block">
+        <span className={cn("font-semibold tracking-wider uppercase text-sm mb-3 block", isLight ? "text-accent drop-shadow" : "text-secondary")}>
           {subtitle}
         </span>
       )}
-      <h2 className="text-3xl md:text-4xl font-serif text-primary font-bold">
+      <h2 className={cn("text-3xl md:text-4xl font-serif font-bold", isLight ? "text-white drop-shadow-lg" : "text-primary")}>
         {title}
       </h2>
       
-      {/* 2. Affichage de la description si elle existe */}
       {description && (
-        <p className="mt-4 text-gray-600 text-lg">
+        <p className={cn(
+          "mt-4 text-lg", 
+          isLight || isMixed ? "text-white/90 drop-shadow-md font-medium" : "text-zinc-600"
+        )}>
           {description}
         </p>
       )}

@@ -43,6 +43,7 @@ export default function ShopPage() {
         subtitle=""
         description="Découvrez notre sélection de plantes, outils et accessoires pour sublimer votre jardin."
         centered
+        variant="light"
       />
 
       {/* Menu des filtres */}

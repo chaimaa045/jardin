@@ -19,8 +19,8 @@ function ProductFormContent({ productId }: ProductFormPageProps) {
 
   const [form, setForm] = useState<ProductFormData>({
     name: '',
-    price: 0,
-    stock: 0,
+    price: '' as any,
+    stock: '' as any,
     imageUrl: '',
     categoryId: '',
     description: '',
@@ -68,9 +68,17 @@ function ProductFormContent({ productId }: ProductFormPageProps) {
   ) => {
     const { name, value, type } = e.target;
     const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : undefined;
+    
+    let parsedValue: any = value;
+    if (type === 'number') {
+      // Remove leading zeros to avoid '05' becoming just '5' but looking confusing while typing
+      // Also allow empty string so the field can be completely cleared
+      parsedValue = value === '' ? '' : Number(value);
+    }
+    
     setForm(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : type === 'number' ? Number(value) : value,
+      [name]: type === 'checkbox' ? checked : parsedValue,
     }));
   };
 

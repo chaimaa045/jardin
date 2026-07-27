@@ -7,8 +7,11 @@ body {
   overflow-x: hidden;
   position: relative;
   background-color: var(--color-background);
-  background-image: url('/motif.svg');
+  background-image: url('/motif.jpg');
   background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 #__next {
@@ -24,7 +27,7 @@ body {
   /* Blanc cassé sablé */
   --color-background: #FAF8F5;
   /* Vert soft naturel pour boutons et accents */
-  --color-accent: #4a9090;
+  --color-accent: #142C14;
   /* Couleur pierre claire pour les fonds secondaires */
   --color-surface: #F3EFEA;
   --color-primary-dark: #121413;

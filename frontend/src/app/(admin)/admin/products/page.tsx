@@ -95,46 +95,46 @@ export default function AdminProductsPage() {
               <table className="w-full text-sm text-left">
                 <thead className="bg-surface text-primary/70 text-xs uppercase font-semibold border-b border-[#e5dfd5]">
                   <tr>
-                    <th className="px-6 py-4">Produit</th>
-                    <th className="px-6 py-4">Catégorie</th>
-                    <th className="px-6 py-4">Prix</th>
-                    <th className="px-6 py-4">Stock</th>
-                    <th className="px-6 py-4 text-center">Vedette</th>
-                    <th className="px-6 py-4 text-right">Actions</th>
+                    <th className="px-4 lg:px-6 py-4">Produit</th>
+                    <th className="px-4 lg:px-6 py-4 hidden md:table-cell">Catégorie</th>
+                    <th className="px-4 lg:px-6 py-4">Prix</th>
+                    <th className="px-4 lg:px-6 py-4 hidden sm:table-cell">Stock</th>
+                    <th className="px-4 lg:px-6 py-4 text-center hidden lg:table-cell">Vedette</th>
+                    <th className="px-4 lg:px-6 py-4 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#e5dfd5]">
                   {products.map((product) => (
                     <tr key={product.id} className="hover:bg-surface/50 transition-colors group">
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-4">
+                      <td className="px-4 lg:px-6 py-4">
+                        <div className="flex items-center gap-3 md:gap-4">
                           {product.imageUrl ? (
                             <img 
                               src={getCleanImageUrl(product.imageUrl)} 
                               alt={product.name} 
-                              className="w-12 h-12 rounded-lg object-cover border border-[#e5dfd5]" 
+                              className="w-10 h-10 md:w-12 md:h-12 rounded-lg object-cover border border-[#e5dfd5] shrink-0" 
                             />
                           ) : (
-                            <div className="w-12 h-12 rounded-lg bg-surface flex items-center justify-center border border-[#e5dfd5]">
-                              <span className="text-primary/30 text-xs">Img</span>
+                            <div className="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-surface flex items-center justify-center border border-[#e5dfd5] shrink-0">
+                              <span className="text-primary/30 text-[10px] md:text-xs">Img</span>
                             </div>
                           )}
-                          <div>
-                            <p className="font-semibold text-primary">{product.name}</p>
+                          <div className="min-w-0">
+                            <p className="font-semibold text-primary text-sm line-clamp-1">{product.name}</p>
                             {product.description && (
-                              <p className="text-xs text-primary/50 mt-0.5 truncate max-w-[200px]">{product.description}</p>
+                              <p className="text-xs text-primary/50 mt-0.5 truncate max-w-[100px] sm:max-w-[150px] md:max-w-[200px]">{product.description}</p>
                             )}
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4">
-                        <span className="bg-surface border border-[#e5dfd5] text-primary/80 text-xs font-medium px-3 py-1 rounded-full">
+                      <td className="px-4 lg:px-6 py-4 hidden md:table-cell">
+                        <span className="bg-surface border border-[#e5dfd5] text-primary/80 text-[10px] md:text-xs font-medium px-2 py-1 md:px-3 rounded-full whitespace-nowrap">
                           {product.category?.name || 'Non classé'}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-secondary font-bold">{product.price.toFixed(2)} DH</td>
-                      <td className="px-6 py-4">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${
+                      <td className="px-4 lg:px-6 py-4 text-secondary font-bold whitespace-nowrap">{product.price.toFixed(2)} DH</td>
+                      <td className="px-4 lg:px-6 py-4 hidden sm:table-cell">
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] md:text-xs font-bold whitespace-nowrap ${
                           product.stock <= 5 
                             ? 'bg-accent/10 text-accent border border-accent/20' 
                             : 'bg-primary/5 text-primary border border-primary/10'
@@ -142,14 +142,14 @@ export default function AdminProductsPage() {
                           {product.stock}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-center">
+                      <td className="px-4 lg:px-6 py-4 text-center hidden lg:table-cell">
                         {product.featured ? (
                           <Star className="w-5 h-5 text-[#EAB308] fill-[#EAB308] mx-auto" />
                         ) : (
                           <span className="text-primary/30">—</span>
                         )}
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-4 lg:px-6 py-4">
                         <div className="flex items-center justify-end gap-2 transition-opacity">
                           <Link
                             href={`/admin/products/${product.id}`}

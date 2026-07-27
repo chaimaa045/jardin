@@ -13,6 +13,7 @@ import { getMessages } from 'next-intl/server';
 
 // 2. IMPORT DU PANIER
 import { CartProvider } from '@/hooks/useCart';
+import { Toaster } from 'react-hot-toast';
 
 const inter = Inter({
   variable: "--font-inter",
@@ -125,6 +126,7 @@ export default async function RootLayout({
             </main>
             <Footer />
             <WhatsAppButton />
+            <Toaster position="bottom-center" />
           </CartProvider>
         </NextIntlClientProvider>
 

@@ -22,7 +22,7 @@ export function CtaSection() {
           <h2 className="text-3xl md:text-5xl font-serif font-bold text-primary mb-6 leading-tight">
             {t('title')}
           </h2>
-          <p className="text-lg text-zinc-600 mb-10 max-w-2xl mx-auto">
+          <p className="text-lg text-white drop-shadow-md font-medium mb-10 max-w-2xl mx-auto">
             {t('desc')}
           </p>
           <Link href="/contact">

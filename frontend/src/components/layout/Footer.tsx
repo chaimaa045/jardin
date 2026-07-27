@@ -8,7 +8,7 @@ export function Footer() {
   const t = useTranslations('Footer');
 
   return (
-    <footer className="bg-[#4a9090] text-white pt-20 pb-8">
+    <footer className="bg-accent text-white pt-20 pb-8">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           
@@ -37,6 +37,9 @@ export function Footer() {
             <ul className="space-y-4">
               <li>
                 <Link href="/" className="text-white/80 hover:text-white transition-colors">{t('quickLinks.home')}</Link>
+              </li>
+              <li>
+                <Link href="/shop" className="text-white/80 hover:text-white transition-colors">{t('quickLinks.shop')}</Link>
               </li>
               <li>
                 <Link href="/services" className="text-white/80 hover:text-white transition-colors">{t('quickLinks.services')}</Link>

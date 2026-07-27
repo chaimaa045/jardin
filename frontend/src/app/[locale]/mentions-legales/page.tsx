@@ -20,11 +20,13 @@ export default function MentionsLegalesPage() {
 
   return (
     <>
-      <section className="pt-28 md:pt-32 pb-8 md:pb-12 bg-primary/5">
-        <div className="container mx-auto px-4 md:px-6 text-center">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-primary mb-4 md:mb-6">
-            {t('hero.title')}
-          </h1>
+      <section className="pt-28 md:pt-32 pb-8 md:pb-12 relative z-10">
+        <div className="container mx-auto px-4 text-center">
+          <div className="max-w-3xl mx-auto">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-white drop-shadow-lg mb-4 md:mb-6">
+              {t('hero.title')}
+            </h1>
+          </div>
         </div>
       </section>
 

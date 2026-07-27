@@ -53,29 +53,29 @@ export function HeroSection() {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] bg-gradient-to-tr from-primary/10 to-secondary/10 rounded-full blur-2xl -z-10"></div>
           </div>
 
-          <div className="w-full lg:w-1/2 order-2 lg:order-2 flex flex-col items-center text-center lg:items-start lg:text-left">
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] leading-[1.1] text-zinc-900 font-bold tracking-tight">
+          <div className="w-full lg:w-1/2 order-2 lg:order-2 flex flex-col items-center text-center lg:items-start lg:text-left relative z-10">
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem] leading-[1.1] text-white drop-shadow-lg font-bold tracking-tight">
               {locale === 'ar' ? (
-                 <span className="text-primary">{profile.personal.name}</span>
+                 <span className="text-white">{profile.personal.name}</span>
               ) : (
                 <>
                   {profile.personal.name.split(' ')[0]} <br className="hidden sm:block lg:hidden" />
-                  <span className="text-primary">{profile.personal.name.split(' ').slice(1).join(' ')}</span>
+                  <span className="text-accent">{profile.personal.name.split(' ').slice(1).join(' ')}</span>
                 </>
               )}
             </h1>
             
-            <h2 className="font-sans font-medium text-xl sm:text-2xl md:text-3xl text-zinc-600 mt-4 sm:mt-6">
-  {t('title')}
-</h2>
+            <h2 className="font-sans font-semibold text-xl sm:text-2xl md:text-3xl text-white/90 drop-shadow-md mt-4 sm:mt-6">
+              {t('title')}
+            </h2>
             
-           <p className="mt-6 sm:mt-8 text-base sm:text-lg text-zinc-600 max-w-xl leading-relaxed">
-  {t('short_desc')}
-</p>
+            <p className="mt-6 sm:mt-8 text-base sm:text-lg text-white/80 drop-shadow max-w-xl leading-relaxed font-medium">
+              {t('short_desc')}
+            </p>
 
             <div className="mt-10 sm:mt-12 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
               <Link href="/contact" className="w-full sm:w-auto">
-                <Button size="lg" className="rounded-2xl px-8 py-6 w-full sm:w-auto text-base font-semibold shadow-xl shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-1 transition-all duration-300">
+                <Button size="lg" className="rounded-2xl px-8 py-6 w-full sm:w-auto text-base font-semibold shadow-xl shadow-accent/20 hover:shadow-accent/40 hover:-translate-y-1 transition-all duration-300">
                   {t('buttons.quote')}
                 </Button>
               </Link>

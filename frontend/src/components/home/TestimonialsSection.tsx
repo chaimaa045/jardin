@@ -41,6 +41,7 @@ export function TestimonialsSection() {
             title={t("title")}
             subtitle={t("subtitle")}
             description={t("description")}
+            variant="mixed"
           />
           <div className="hidden md:flex gap-3">
             <button 

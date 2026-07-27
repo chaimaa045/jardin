@@ -20,10 +20,10 @@ export default function ContactPage() {
 
   return (
     <>
-      <section className="pt-32 pb-16 bg-primary/5">
+      <section className="pt-32 pb-16">
         <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-6">{t('hero.title')}</h1>
-            <p className="text-lg text-zinc-600 max-w-2xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-serif font-bold text-white drop-shadow-lg mb-6">{t('hero.title')}</h1>
+            <p className="text-lg text-white/90 drop-shadow-md font-medium max-w-2xl mx-auto">
               {t('hero.desc')}
             </p>
         </div>
