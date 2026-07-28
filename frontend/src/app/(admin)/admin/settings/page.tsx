@@ -2,8 +2,8 @@
 import { useState } from 'react';
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
 import { useAuth } from '@/hooks/useAuth';
-import { Shield, Key, CheckCircle, AlertCircle, Loader2, Lock, Eye, EyeOff } from 'lucide-react';
-import { authApi } from '@/services/api';
+import { Shield, Key, CheckCircle, AlertCircle, Loader2, Lock, Eye, EyeOff, Settings } from 'lucide-react';
+import { authApi, settingsApi } from '@/services/api';
 
 export default function AdminSettingsPage() {
   const { user } = useAuth();
@@ -15,6 +15,24 @@ export default function AdminSettingsPage() {
   const [usernameForm, setUsernameForm] = useState({ newUsername: user?.username || '' });
   const [isSubmittingProfile, setIsSubmittingProfile] = useState(false);
   const [profileMessage, setProfileMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+
+  // Settings state
+  const [siteSettings, setSiteSettings] = useState({
+    companyName: '',
+    email: '',
+    phone: '',
+    address: '',
+    facebookUrl: '',
+    instagramUrl: '',
+    whatsappNumber: '',
+    aboutText: ''
+  });
+  const [isSubmittingSettings, setIsSubmittingSettings] = useState(false);
+  const [settingsMessage, setSettingsMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+
+  React.useEffect(() => {
+    settingsApi.get().then(data => setSiteSettings(data)).catch(console.error);
+  }, []);
 
   const handlePasswordChange = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,6 +75,20 @@ export default function AdminSettingsPage() {
       setProfileMessage({ type: 'error', text: err.message || 'Erreur lors de la modification.' });
     } finally {
       setIsSubmittingProfile(false);
+    }
+  };
+
+  const handleSettingsChange = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmittingSettings(true);
+    setSettingsMessage(null);
+    try {
+      await settingsApi.update(siteSettings);
+      setSettingsMessage({ type: 'success', text: 'Paramètres mis à jour avec succès.' });
+    } catch (err: any) {
+      setSettingsMessage({ type: 'error', text: err.message || 'Erreur lors de la modification.' });
+    } finally {
+      setIsSubmittingSettings(false);
     }
   };
 
@@ -225,6 +257,98 @@ export default function AdminSettingsPage() {
                   >
                     {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : <CheckCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />}
                     Mettre à jour la sécurité
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            {/* Paramètres du Site */}
+            <div className="bg-white border border-[#e5dfd5] rounded-3xl p-8 shadow-sm mt-8">
+              <h2 className="text-xl font-bold text-primary mb-6 flex items-center gap-2 font-serif">
+                <Settings className="w-6 h-6 text-secondary" />
+                Paramètres du site (Informations publiques)
+              </h2>
+
+              {settingsMessage && (
+                <div className={`mb-8 p-4 rounded-xl flex items-start gap-3 text-sm font-medium border animate-in fade-in slide-in-from-top-2 ${
+                  settingsMessage.type === 'success' 
+                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200' 
+                    : 'bg-red-50 text-red-600 border-red-200'
+                }`}>
+                  {settingsMessage.type === 'success' ? <CheckCircle className="w-5 h-5 mt-0.5 shrink-0" /> : <AlertCircle className="w-5 h-5 mt-0.5 shrink-0" />}
+                  <p>{settingsMessage.text}</p>
+                </div>
+              )}
+
+              <form onSubmit={handleSettingsChange} className="space-y-6">
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-bold text-primary mb-2">Nom de l'entreprise</label>
+                    <input
+                      type="text" value={siteSettings.companyName || ''} onChange={e => setSiteSettings({...siteSettings, companyName: e.target.value})}
+                      className="w-full bg-surface border border-[#e5dfd5] text-primary rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-primary mb-2">Email de contact</label>
+                    <input
+                      type="email" value={siteSettings.email || ''} onChange={e => setSiteSettings({...siteSettings, email: e.target.value})}
+                      className="w-full bg-surface border border-[#e5dfd5] text-primary rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-primary mb-2">Téléphone principal</label>
+                    <input
+                      type="text" value={siteSettings.phone || ''} onChange={e => setSiteSettings({...siteSettings, phone: e.target.value})}
+                      className="w-full bg-surface border border-[#e5dfd5] text-primary rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-primary mb-2">Numéro WhatsApp</label>
+                    <input
+                      type="text" value={siteSettings.whatsappNumber || ''} onChange={e => setSiteSettings({...siteSettings, whatsappNumber: e.target.value})}
+                      className="w-full bg-surface border border-[#e5dfd5] text-primary rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-primary mb-2">Lien Facebook</label>
+                    <input
+                      type="url" value={siteSettings.facebookUrl || ''} onChange={e => setSiteSettings({...siteSettings, facebookUrl: e.target.value})}
+                      className="w-full bg-surface border border-[#e5dfd5] text-primary rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-primary mb-2">Lien Instagram</label>
+                    <input
+                      type="url" value={siteSettings.instagramUrl || ''} onChange={e => setSiteSettings({...siteSettings, instagramUrl: e.target.value})}
+                      className="w-full bg-surface border border-[#e5dfd5] text-primary rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-primary mb-2">Adresse</label>
+                  <textarea
+                    rows={2} value={siteSettings.address || ''} onChange={e => setSiteSettings({...siteSettings, address: e.target.value})}
+                    className="w-full bg-surface border border-[#e5dfd5] text-primary rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-primary mb-2">Texte "À propos" (bas de page)</label>
+                  <textarea
+                    rows={3} value={siteSettings.aboutText || ''} onChange={e => setSiteSettings({...siteSettings, aboutText: e.target.value})}
+                    className="w-full bg-surface border border-[#e5dfd5] text-primary rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all"
+                  />
+                </div>
+
+                <div className="pt-4">
+                  <button
+                    type="submit" disabled={isSubmittingSettings}
+                    className="w-full sm:w-auto bg-primary text-white font-bold py-3.5 px-8 rounded-xl hover:bg-primary/90 disabled:opacity-70 transition-all shadow-sm flex items-center justify-center gap-2 group"
+                  >
+                    {isSubmittingSettings ? <Loader2 className="w-5 h-5 animate-spin" /> : <CheckCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />}
+                    Sauvegarder les paramètres
                   </button>
                 </div>
               </form>

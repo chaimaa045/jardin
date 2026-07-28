@@ -11,6 +11,9 @@ export default function ShopPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [activeCategoryId, setActiveCategoryId] = useState<number | 'ALL'>('ALL');
   const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [priceRange, setPriceRange] = useState<number>(5000);
+  const [maxAvailablePrice, setMaxAvailablePrice] = useState<number>(5000);
 
   // 1. Récupération des données depuis Spring Boot
   useEffect(() => {
@@ -22,6 +25,9 @@ export default function ShopPage() {
         ]);
         setProducts(productsData as Product[]);
         setCategories(categoriesData as Category[]);
+        const maxP = Math.max(...(productsData as Product[]).map(p => p.price), 100);
+        setMaxAvailablePrice(maxP);
+        setPriceRange(maxP);
       } catch (error) {
         console.error("Erreur de chargement de la boutique:", error);
       } finally {
@@ -31,10 +37,14 @@ export default function ShopPage() {
     fetchData();
   }, []);
 
-  // 3. Application du filtre
-  const filteredProducts = activeCategoryId === 'ALL'
-    ? products
-    : products.filter(p => p.category?.id === activeCategoryId);
+  // 3. Application des filtres multiples
+  const filteredProducts = products.filter(p => {
+    const matchCategory = activeCategoryId === 'ALL' || p.category?.id === activeCategoryId;
+    const matchSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                        (p.description && p.description.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchPrice = p.price <= priceRange;
+    return matchCategory && matchSearch && matchPrice;
+  });
 
   return (
     <div className="container mx-auto px-4 pt-32 pb-16 sm:pt-40 sm:pb-24">
@@ -46,9 +56,33 @@ export default function ShopPage() {
         variant="light"
       />
 
-      {/* Menu des filtres */}
-      {!isLoading && categories.length > 0 && (
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
+      {/* Filtres et Recherche */}
+      {!isLoading && (
+        <div className="max-w-4xl mx-auto mb-12 space-y-6">
+          <div className="flex flex-col md:flex-row gap-4">
+            <input 
+              type="text" 
+              placeholder="Rechercher un produit..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="flex-1 bg-white border border-[#e5dfd5] text-primary rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary shadow-sm"
+            />
+            <div className="flex flex-col flex-1 bg-white border border-[#e5dfd5] rounded-xl px-4 py-2 shadow-sm">
+              <label className="text-xs text-primary/70 font-semibold mb-1">Prix maximum : {priceRange} DH</label>
+              <input 
+                type="range" 
+                min="0" 
+                max={maxAvailablePrice} 
+                step="10"
+                value={priceRange}
+                onChange={(e) => setPriceRange(Number(e.target.value))}
+                className="w-full accent-secondary"
+              />
+            </div>
+          </div>
+          
+          {categories.length > 0 && (
+            <div className="flex flex-wrap justify-center gap-3">
           <button
             onClick={() => setActiveCategoryId('ALL')}
             className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ease-in-out focus:outline-none ${activeCategoryId === 'ALL'

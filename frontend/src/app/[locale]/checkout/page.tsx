@@ -13,6 +13,7 @@ export default function CheckoutPage() {
   const [formData, setFormData] = useState({
     customerName: '',
     customerPhone: '',
+    customerEmail: '',
     customerAddress: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -125,6 +126,14 @@ export default function CheckoutPage() {
                 title="Veuillez saisir un numéro de téléphone marocain valide (ex: 06 00 00 00 00 ou +212 6 00 00 00 00)"
                 className="w-full bg-surface border border-[#e5dfd5] text-primary rounded-xl px-4 py-3 focus:ring-2 focus:ring-secondary/50 focus:border-secondary outline-none"
                 placeholder="ex: 06 00 00 00 00"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-primary mb-2">Adresse email *</label>
+              <input
+                type="email" name="customerEmail" required value={formData.customerEmail} onChange={handleChange}
+                className="w-full bg-surface border border-[#e5dfd5] text-primary rounded-xl px-4 py-3 focus:ring-2 focus:ring-secondary/50 focus:border-secondary outline-none"
+                placeholder="ex: ahmed@email.com"
               />
             </div>
             <div>

@@ -16,6 +16,8 @@ public class OrderRequest {
     @NotBlank(message = "Le téléphone du client est requis")
     private String customerPhone;
 
+    private String customerEmail;
+
     @NotBlank(message = "L'adresse du client est requise")
     private String customerAddress;
 

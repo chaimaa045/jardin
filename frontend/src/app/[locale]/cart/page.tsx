@@ -62,6 +62,7 @@ export default function CartPage() {
                         <input
                           type="number"
                           min="1"
+                          max={item.stock}
                           value={item.quantity}
                           onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))}
                           className="w-20 border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm"

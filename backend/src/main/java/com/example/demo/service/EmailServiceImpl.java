@@ -52,4 +52,37 @@ public class EmailServiceImpl implements EmailService {
             System.err.println("Erreur lors de l'envoi de l'email : " + e.getMessage());
         }
     }
+
+    @Override
+    public void sendCustomerConfirmationEmail(Order order) {
+        if (order.getCustomerEmail() == null || order.getCustomerEmail().isEmpty()) {
+            System.out.println("Email client non fourni. Commande #" + order.getId() + " - email non envoyé.");
+            return;
+        }
+
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setFrom(adminEmail);
+            helper.setTo(order.getCustomerEmail());
+            helper.setSubject("🌿 Souss Garden - Confirmation de votre commande #" + order.getId());
+
+            String htmlContent = "<h2>Merci pour votre commande !</h2>"
+                    + "<p>Bonjour " + order.getCustomerName() + ",</p>"
+                    + "<p>Nous avons bien reçu votre commande d'un montant total de <strong>" + order.getTotalAmount() + " MAD</strong>.</p>"
+                    + "<p>Le paiement se fera à la livraison.</p>"
+                    + "<br>"
+                    + "<p>Nous vous contacterons très prochainement au <strong>" + order.getCustomerPhone() + "</strong> pour la livraison à l'adresse suivante :</p>"
+                    + "<p><em>" + order.getCustomerAddress() + "</em></p>"
+                    + "<br>"
+                    + "<p>À très bientôt sur Jardin Souss !</p>";
+
+            helper.setText(htmlContent, true);
+            mailSender.send(message);
+
+        } catch (MessagingException e) {
+            System.err.println("Erreur lors de l'envoi de l'email client : " + e.getMessage());
+        }
+    }
 }

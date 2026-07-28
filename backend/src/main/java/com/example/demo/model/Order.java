@@ -28,6 +28,9 @@ public class Order {
     @Column(nullable = false)
     private String customerPhone;
 
+    @Column(nullable = true)
+    private String customerEmail;
+
     @Column(nullable = false, columnDefinition = "TEXT")
     private String customerAddress;
 

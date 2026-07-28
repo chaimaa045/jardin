@@ -33,6 +33,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = Order.builder()
                 .customerName(request.getCustomerName())
                 .customerPhone(request.getCustomerPhone())
+                .customerEmail(request.getCustomerEmail())
                 .customerAddress(request.getCustomerAddress())
                 .status("NOUVELLE")
                 .items(new ArrayList<>())
@@ -70,6 +71,7 @@ public class OrderServiceImpl implements OrderService {
         // Envoyer email sans bloquer la commande en cas d'erreur
         try {
             emailService.sendNewOrderEmail(savedOrder);
+            emailService.sendCustomerConfirmationEmail(savedOrder);
         } catch (Exception e) {
             System.err.println("Erreur lors de l'envoi de l'email: " + e.getMessage());
         }
@@ -152,6 +154,7 @@ public class OrderServiceImpl implements OrderService {
                 .id(order.getId())
                 .customerName(order.getCustomerName())
                 .customerPhone(order.getCustomerPhone())
+                .customerEmail(order.getCustomerEmail())
                 .customerAddress(order.getCustomerAddress())
                 .status(order.getStatus())
                 .totalAmount(order.getTotalAmount())

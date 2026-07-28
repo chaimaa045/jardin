@@ -166,4 +166,14 @@ export const uploadApi = {
   },
 };
 
+// ============================================================
+// API Publique & Admin — Paramètres du Site
+// ============================================================
+
+export const settingsApi = {
+  get: () => apiFetch<any>('/api/settings'),
+  update: (data: any) =>
+    apiFetch<any>('/api/settings', { method: 'PUT', data }),
+};
+
 export default apiFetch;
