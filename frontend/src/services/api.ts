@@ -9,11 +9,12 @@
 import { Product, Category } from '@/types/shop';
 import { AdminProduct, Category as AdminCategory, Order, ProductFormData, CategoryFormData } from '@/types/admin';
 
-// En production, on utilise '' (vide) car Next.js rewrites proxy /api/* vers le backend
-// En local, on utilise l'URL directe du backend
-const API_BASE = process.env.NEXT_PUBLIC_API_URL
-  ? ''  // En production : les rewrites dans next.config.ts redirigent /api/* vers le backend
-  : 'http://localhost:8080'; // En local : accès direct au backend
+// Côté client, on utilise le proxy Next.js (rewrites) pour gérer CORS et cookies (API_BASE = '')
+// Côté serveur (SSR), on doit utiliser une URL absolue complète.
+const IS_SERVER = typeof window === 'undefined';
+const API_BASE = IS_SERVER
+  ? (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080')
+  : '';
 
 interface FetchOptions extends RequestInit {
   data?: unknown;
