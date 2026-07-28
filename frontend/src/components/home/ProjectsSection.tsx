@@ -1,15 +1,31 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { getPortfolioItems } from "@/data/gallerie";
+import { portfolioApi } from "@/services/api";
+import { PortfolioProject } from "@/types/portfolio";
 import { ProjectCard } from "@/components/ui/ProjectCard";
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
+import { Loader2 } from "lucide-react";
 
-export async function ProjectsSection() {
-  // On récupère toutes les traductions
-  const t = await getTranslations();
+export function ProjectsSection() {
+  const t = useTranslations();
+  const [recentProjects, setRecentProjects] = useState<PortfolioProject[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // On passe 't' pour que la fonction puisse traduire les items
-  const portfolioItems = getPortfolioItems(t);
-  const recentProjects = portfolioItems.slice(0, 3);
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const items = await portfolioApi.getProjects();
+        setRecentProjects((items as PortfolioProject[]).slice(0, 3));
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProjects();
+  }, []);
 
   return (
     <section className="py-16 md:py-24 bg-background">
@@ -23,14 +39,20 @@ export async function ProjectsSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12">
-          {recentProjects.map((project) => (
-            <ProjectCard 
-              key={project.id} 
-              project={project} 
-            />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="flex justify-center py-10">
+            <Loader2 className="w-8 h-8 animate-spin text-secondary" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12">
+            {recentProjects.map((project) => (
+              <ProjectCard 
+                key={project.id} 
+                project={project} 
+              />
+            ))}
+          </div>
+        )}
 
         <div className="text-center mt-10">
           <Link 
