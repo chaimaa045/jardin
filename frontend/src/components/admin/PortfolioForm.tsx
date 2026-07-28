@@ -70,9 +70,9 @@ export function PortfolioForm({ initialData, isEdit }: PortfolioFormProps) {
         setFormData(prev => ({ ...prev, gallery: [...prev.gallery, ...uploadedUrls] }));
         toast.success(`${uploadedUrls.length} images ajoutées`, { id: toastId });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      toast.error('Échec de l\'upload', { id: toastId });
+      toast.error(`Échec de l'upload: ${error.message || 'Erreur inconnue'}`, { id: toastId });
     }
   };
 
