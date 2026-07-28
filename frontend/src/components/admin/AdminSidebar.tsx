@@ -7,9 +7,9 @@ import { LayoutDashboard, Leaf, ShoppingBag, Tags, Settings, ExternalLink, LogOu
 const navigation = [
   { name: 'Tableau de bord', href: '/admin/dashboard', icon: LayoutDashboard },
   { name: 'Produits', href: '/admin/products', icon: Leaf },
-  { name: 'Portfolio', href: '/admin/portfolio', icon: ImageIcon },
   { name: 'Commandes', href: '/admin/orders', icon: ShoppingBag },
   { name: 'Catégories', href: '/admin/categories', icon: Tags },
+  { name: 'Portfolio', href: '/admin/portfolio', icon: ImageIcon },
   { name: 'Paramètres', href: '/admin/settings', icon: Settings },
 ];
 

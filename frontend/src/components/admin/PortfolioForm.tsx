@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { adminPortfolioApi, portfolioApi } from '@/services/api';
 import type { PortfolioProject, PortfolioCategory, PortfolioProjectFormData } from '@/types/portfolio';
-import { Save, ArrowLeft, Loader2, UploadCloud, X } from 'lucide-react';
+import { Save, ArrowLeft, Loader2, UploadCloud, X, Settings } from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'react-hot-toast';
+import { PortfolioCategoriesModal } from './PortfolioCategoriesModal';
 
 interface PortfolioFormProps {
   initialData?: PortfolioProject;
@@ -17,6 +18,7 @@ export function PortfolioForm({ initialData, isEdit }: PortfolioFormProps) {
   const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
   const [categories, setCategories] = useState<PortfolioCategory[]>([]);
+  const [isCategoriesModalOpen, setIsCategoriesModalOpen] = useState(false);
   
   const [formData, setFormData] = useState<PortfolioProjectFormData>({
     title: initialData?.title || '',
@@ -26,18 +28,19 @@ export function PortfolioForm({ initialData, isEdit }: PortfolioFormProps) {
     categoryId: initialData?.category?.id || 0,
   });
 
-  useEffect(() => {
-    const loadCategories = async () => {
-      try {
-        const cats = await portfolioApi.getCategories();
-        setCategories(cats as PortfolioCategory[]);
-        if (!isEdit && cats.length > 0) {
-          setFormData(prev => ({ ...prev, categoryId: cats[0].id }));
-        }
-      } catch (e) {
-        console.error(e);
+  const loadCategories = async () => {
+    try {
+      const cats = await portfolioApi.getCategories();
+      setCategories(cats as PortfolioCategory[]);
+      if (!isEdit && cats.length > 0 && formData.categoryId === 0) {
+        setFormData(prev => ({ ...prev, categoryId: cats[0].id }));
       }
-    };
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
     loadCategories();
   }, [isEdit]);
 
@@ -218,18 +221,35 @@ export function PortfolioForm({ initialData, isEdit }: PortfolioFormProps) {
         {/* Colonne Latérale */}
         <div className="space-y-8">
           <div className="bg-white p-6 rounded-2xl border border-[#e5dfd5] shadow-sm space-y-6">
-            <h2 className="text-lg font-bold text-primary font-serif">Catégorie</h2>
-            <div>
-              <select
-                value={formData.categoryId}
-                onChange={(e) => setFormData({ ...formData, categoryId: Number(e.target.value) })}
-                className="w-full px-4 py-3 rounded-xl border border-[#e5dfd5] bg-surface focus:bg-white focus:ring-2 focus:ring-secondary/50 outline-none transition-all"
-                required
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-bold text-primary font-serif">Catégorie *</h2>
+              <button
+                type="button"
+                onClick={() => setIsCategoriesModalOpen(true)}
+                className="text-xs flex items-center gap-1 text-secondary hover:text-secondary/80 font-medium px-2 py-1 bg-secondary/10 hover:bg-secondary/20 rounded-lg transition-colors"
               >
-                {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>{cat.name}</option>
-                ))}
-              </select>
+                <Settings className="w-3 h-3" />
+                Gérer
+              </button>
+            </div>
+            <div>
+              {categories.length === 0 ? (
+                <div className="text-sm text-amber-600 bg-amber-50 p-3 rounded-xl border border-amber-200">
+                  Aucune catégorie n'existe. Veuillez en créer une en cliquant sur "Gérer".
+                </div>
+              ) : (
+                <select
+                  value={formData.categoryId}
+                  onChange={(e) => setFormData({ ...formData, categoryId: Number(e.target.value) })}
+                  className="w-full px-4 py-3 rounded-xl border border-[#e5dfd5] bg-surface focus:bg-white focus:ring-2 focus:ring-secondary/50 outline-none transition-all"
+                  required
+                >
+                  <option value={0} disabled>Sélectionner une catégorie</option>
+                  {categories.map((cat) => (
+                    <option key={cat.id} value={cat.id}>{cat.name}</option>
+                  ))}
+                </select>
+              )}
             </div>
           </div>
 
@@ -260,6 +280,12 @@ export function PortfolioForm({ initialData, isEdit }: PortfolioFormProps) {
           </div>
         </div>
       </div>
+
+      <PortfolioCategoriesModal
+        isOpen={isCategoriesModalOpen}
+        onClose={() => setIsCategoriesModalOpen(false)}
+        onCategoriesChange={loadCategories}
+      />
     </form>
   );
 }
