@@ -280,9 +280,10 @@ export function PortfolioForm({ initialData, isEdit }: PortfolioFormProps) {
             </div>
           </div>
         </div>
-      </form>
+      </div>
+    </form>
 
-      <PortfolioCategoriesModal
+    <PortfolioCategoriesModal
         isOpen={isCategoriesModalOpen}
         onClose={() => setIsCategoriesModalOpen(false)}
         onCategoriesChange={loadCategories}
