@@ -59,21 +59,40 @@ export function PortfolioForm({ initialData, isEdit }: PortfolioFormProps) {
         setFormData(prev => ({ ...prev, coverImage: data.url }));
         toast.success('Image ajoutée', { id: toastId });
       } else {
-        // Upload gallery images
-        const uploadedUrls: string[] = [];
-        for (let i = 0; i < files.length; i++) {
-          const file = files[i];
-          const data = await uploadApi.uploadFile(file);
-          uploadedUrls.push(data.url);
-        }
+        // Upload gallery images concurrently
+        const uploadPromises = Array.from(files).map(file => uploadApi.uploadFile(file));
+        const results = await Promise.allSettled(uploadPromises);
         
-        setFormData(prev => ({ ...prev, gallery: [...prev.gallery, ...uploadedUrls] }));
-        toast.success(`${uploadedUrls.length} images ajoutées`, { id: toastId });
+        const uploadedUrls: string[] = [];
+        let errorCount = 0;
+        let lastErrorMsg = '';
+
+        results.forEach(result => {
+          if (result.status === 'fulfilled') {
+            uploadedUrls.push(result.value.url);
+          } else {
+            errorCount++;
+            lastErrorMsg = result.reason?.message || 'Erreur inconnue';
+          }
+        });
+
+        if (uploadedUrls.length > 0) {
+          setFormData(prev => ({ ...prev, gallery: [...prev.gallery, ...uploadedUrls] }));
+        }
+
+        if (errorCount > 0) {
+          toast.error(`${errorCount} échec(s). Raison: ${lastErrorMsg}`, { id: toastId });
+        } else {
+          toast.success(`${uploadedUrls.length} images ajoutées`, { id: toastId });
+        }
       }
     } catch (error: any) {
       console.error(error);
-      toast.error(`Échec de l'upload: ${error.message || 'Erreur inconnue'}`, { id: toastId });
+      toast.error(`Échec: ${error.message || 'Erreur inconnue'}`, { id: toastId });
     }
+    
+    // Réinitialiser l'input file pour permettre de sélectionner les mêmes fichiers si on veut
+    e.target.value = '';
   };
 
   const removeGalleryImage = (indexToRemove: number) => {
