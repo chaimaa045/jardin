@@ -17,7 +17,7 @@ export function Footer() {
   }, []);
 
   return (
-    <footer className="bg-accent text-white pt-20 pb-8">
+    <footer className="bg-accent text-white pt-20 pb-28 md:pb-8">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           
@@ -148,7 +148,7 @@ export function Footer() {
         <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-white/60 text-sm">
           <p className="text-center md:text-left">
             &copy; {currentYear} {settings?.companyName || clientProfile.company.businessName} - {t('bottom.landscaper')} {clientProfile.company.city}. {t('bottom.rights')}
-            <a href="/admin/login" className="ml-2 text-white/10 hover:text-white/80 transition-colors" title="Espace Administration">
+            <a href="/admin/login" className="inline-flex items-center justify-center p-3 ml-1 text-white/10 hover:text-white/80 transition-colors" title="Espace Administration">
               •
             </a>
           </p>
