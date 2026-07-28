@@ -129,8 +129,9 @@ export function PortfolioForm({ initialData, isEdit }: PortfolioFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
-      {/* En-tête */}
+    <>
+      <form onSubmit={handleSubmit} className="space-y-8">
+        {/* En-tête */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Link
@@ -279,13 +280,13 @@ export function PortfolioForm({ initialData, isEdit }: PortfolioFormProps) {
             </div>
           </div>
         </div>
-      </div>
+      </form>
 
       <PortfolioCategoriesModal
         isOpen={isCategoriesModalOpen}
         onClose={() => setIsCategoriesModalOpen(false)}
         onCategoriesChange={loadCategories}
       />
-    </form>
+    </>
   );
 }
