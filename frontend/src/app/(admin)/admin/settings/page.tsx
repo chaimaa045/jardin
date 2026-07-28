@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
 import { useAuth } from '@/hooks/useAuth';
 import { Shield, Key, CheckCircle, AlertCircle, Loader2, Lock, Eye, EyeOff, Settings } from 'lucide-react';
@@ -30,7 +30,7 @@ export default function AdminSettingsPage() {
   const [isSubmittingSettings, setIsSubmittingSettings] = useState(false);
   const [settingsMessage, setSettingsMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     settingsApi.get().then(data => setSiteSettings(data)).catch(console.error);
   }, []);
 

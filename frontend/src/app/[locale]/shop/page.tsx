@@ -107,6 +107,8 @@ export default function ShopPage() {
           ))}
         </div>
       )}
+        </div>
+      )}
 
       {/* Chargement */}
       {isLoading ? (
