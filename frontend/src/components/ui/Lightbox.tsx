@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
-import { PortfolioItem } from "@/data/gallerie";
+import { PortfolioProject } from "@/types/portfolio";
 
 interface LightboxProps {
-  project: PortfolioItem | null;
+  project: PortfolioProject | null;
   onClose: () => void;
 }
 
@@ -36,12 +36,13 @@ export function Lightbox({ project, onClose }: LightboxProps) {
     if (!project) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
+      const imgCount = (project.gallery?.length > 0 ? project.gallery : (project.coverImage ? [project.coverImage] : [])).length;
       if (e.key === "Escape") {
         onClose();
-      } else if (e.key === "ArrowRight") {
-        setCurrentIndex((prev) => (prev === project.gallery.length - 1 ? 0 : prev + 1));
-      } else if (e.key === "ArrowLeft") {
-        setCurrentIndex((prev) => (prev === 0 ? project.gallery.length - 1 : prev - 1));
+      } else if (e.key === "ArrowRight" && imgCount > 1) {
+        setCurrentIndex((prev) => (prev === imgCount - 1 ? 0 : prev + 1));
+      } else if (e.key === "ArrowLeft" && imgCount > 1) {
+        setCurrentIndex((prev) => (prev === 0 ? imgCount - 1 : prev - 1));
       }
     };
 
@@ -53,7 +54,9 @@ export function Lightbox({ project, onClose }: LightboxProps) {
 
   if (!project) return null;
 
-  const images = project.gallery;
+  const images = project.gallery?.length > 0 ? project.gallery : (project.coverImage ? [project.coverImage] : []);
+  
+  if (images.length === 0) return null;
 
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation(); // Empêche la fermeture au clic

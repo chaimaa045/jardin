@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { Project } from "@/types";
+import { PortfolioProject } from "@/types/portfolio";
 import { cn } from "@/lib/utils";
 
 interface ProjectCardProps {
-  project: Project;
+  project: PortfolioProject;
   className?: string;
   onClick?: () => void;
 }
@@ -33,7 +33,7 @@ export function ProjectCard({ project, className, onClick }: ProjectCardProps) {
       {/* Content : On annule le translate sur mobile, on l'active sur desktop */}
       <div className="absolute inset-x-0 bottom-0 p-5 md:p-6 translate-y-0 md:translate-y-6 group-hover:translate-y-0 transition-transform duration-300">
         <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md text-white text-xs font-semibold rounded-full mb-2 md:mb-3 border border-white/30">
-          {project.category}
+          {project.category?.name || 'Projet'}
         </span>
         <h3 className="text-lg md:text-2xl font-serif text-white font-bold mb-1 md:mb-2 leading-tight">
           {project.title}
