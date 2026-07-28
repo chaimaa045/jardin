@@ -1,11 +1,19 @@
+"use client";
+import React, { useState, useEffect } from 'react';
 import Link from "next/link";
-import { Leaf, MapPin, Phone, Mail, Clock } from "lucide-react";
+import { Leaf, MapPin, Phone, Mail, Clock, Facebook, Instagram } from "lucide-react";
 import { clientProfile } from '@/data/profile';
 import { useTranslations } from 'next-intl';
+import { settingsApi } from '@/services/api';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
   const t = useTranslations('Footer');
+  const [settings, setSettings] = useState<any>(null);
+
+  useEffect(() => {
+    settingsApi.get().then(data => setSettings(data)).catch(console.error);
+  }, []);
 
   return (
     <footer className="bg-accent text-white pt-20 pb-8">
@@ -24,10 +32,19 @@ export function Footer() {
               </div>
             </Link>
             <p className="text-white/80 mb-6 leading-relaxed">
-              {t('description')}
+              {settings?.aboutText || t('description')}
             </p>
             <div className="flex gap-4">
-              {/* Social icons placeholder */}
+              {settings?.facebookUrl && (
+                <a href={settings.facebookUrl} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary hover:text-white transition-colors">
+                  <Facebook className="w-5 h-5" />
+                </a>
+              )}
+              {settings?.instagramUrl && (
+                <a href={settings.instagramUrl} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary hover:text-white transition-colors">
+                  <Instagram className="w-5 h-5" />
+                </a>
+              )}
             </div>
           </div>
 
@@ -75,7 +92,9 @@ export function Footer() {
               <li className="flex items-start gap-3 text-white/80">
                 <MapPin className="w-5 h-5 text-white/90 shrink-0 mt-0.5" />
                 <span>
-                  {clientProfile?.company?.address ? (
+                  {settings?.address ? (
+                    settings.address
+                  ) : clientProfile?.company?.address ? (
                     <>
                       {clientProfile.company.address}<br />
                       {clientProfile.company.postalCode ? `${clientProfile.company.postalCode} — ` : ''}{clientProfile.company.region || clientProfile.company.city}
@@ -88,7 +107,7 @@ export function Footer() {
               <li className="flex items-center gap-3 text-white/80">
                 <Phone className="w-5 h-5 text-white/90 shrink-0" />
                 {(() => {
-                  const phone = clientProfile?.company?.gsm || clientProfile?.company?.telFax;
+                  const phone = settings?.phone || clientProfile?.company?.gsm || clientProfile?.company?.telFax;
                   const formatPhone = (n?: string) => {
                     if (!n) return null;
                     const trimmed = n.trim();
@@ -98,7 +117,7 @@ export function Footer() {
                   };
                   const href = formatPhone(phone);
                   return href ? (
-                    <a href={`tel:${href.replace(/\s+/g, '')}`} className="hover:text-white transition-colors">{href}</a>
+                    <a href={`tel:${href.replace(/\s+/g, '')}`} className="hover:text-white transition-colors">{phone}</a>
                   ) : (
                     <span className="text-white/80">{t('contactInfo.noPhone')}</span>
                   );
@@ -106,8 +125,10 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3 text-white/80">
                 <Mail className="w-5 h-5 text-white/90 shrink-0" />
-                {clientProfile?.company?.email ? (
-                  <a href={`mailto:${clientProfile.company.email}`} className="hover:text-white transition-colors">{clientProfile.company.email}</a>
+                {settings?.email || clientProfile?.company?.email ? (
+                  <a href={`mailto:${settings?.email || clientProfile.company.email}`} className="hover:text-white transition-colors">
+                    {settings?.email || clientProfile.company.email}
+                  </a>
                 ) : (
                   <span className="text-white/80">{t('contactInfo.noEmail')}</span>
                 )}
@@ -125,7 +146,7 @@ export function Footer() {
 
         <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-white/60 text-sm">
           <p className="text-center md:text-left">
-            &copy; {currentYear} {clientProfile.company.businessName} - {t('bottom.landscaper')} {clientProfile.company.city}. {t('bottom.rights')}
+            &copy; {currentYear} {settings?.companyName || clientProfile.company.businessName} - {t('bottom.landscaper')} {clientProfile.company.city}. {t('bottom.rights')}
             <a href="/admin/login" className="ml-2 text-white/10 hover:text-white/80 transition-colors" title="Espace Administration">
               •
             </a>

@@ -300,14 +300,18 @@ export default function AdminSettingsPage() {
                   <div>
                     <label className="block text-sm font-bold text-primary mb-2">Téléphone principal</label>
                     <input
-                      type="text" value={siteSettings.phone || ''} onChange={e => setSiteSettings({...siteSettings, phone: e.target.value})}
+                      type="tel" value={siteSettings.phone || ''} onChange={e => setSiteSettings({...siteSettings, phone: e.target.value})}
+                      pattern="^(?:(?:\+|00)212|0)\s*[5-7](?:\s*\d){8}$"
+                      title="Veuillez saisir un numéro de téléphone marocain valide (ex: 06 00 00 00 00 ou +212 6 00 00 00 00)"
                       className="w-full bg-surface border border-[#e5dfd5] text-primary rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all"
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-bold text-primary mb-2">Numéro WhatsApp</label>
                     <input
-                      type="text" value={siteSettings.whatsappNumber || ''} onChange={e => setSiteSettings({...siteSettings, whatsappNumber: e.target.value})}
+                      type="tel" value={siteSettings.whatsappNumber || ''} onChange={e => setSiteSettings({...siteSettings, whatsappNumber: e.target.value})}
+                      pattern="^(?:(?:\+|00)212|0)\s*[5-7](?:\s*\d){8}$"
+                      title="Veuillez saisir un numéro de téléphone marocain valide (ex: 06 00 00 00 00 ou +212 6 00 00 00 00)"
                       className="w-full bg-surface border border-[#e5dfd5] text-primary rounded-xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all"
                     />
                   </div>

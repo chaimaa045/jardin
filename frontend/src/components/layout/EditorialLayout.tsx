@@ -63,11 +63,14 @@ export function MotionStaggerGrid({ children, className, id, style }: MotionStag
       id={id}
       style={style}
     >
-      {React.Children.map(children, (child) => (
-        <motion.div variants={itemVariants} className="will-change-transform">
-          {child}
-        </motion.div>
-      ))}
+      {React.Children.map(children, (child) => {
+        if (!React.isValidElement(child)) return child;
+        return (
+          <motion.div key={child.key} variants={itemVariants} className="will-change-transform">
+            {child}
+          </motion.div>
+        );
+      })}
     </motion.div>
   );
 }

@@ -2,11 +2,12 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
-import { LayoutDashboard, Leaf, ShoppingBag, Tags, Settings, ExternalLink, LogOut } from 'lucide-react';
+import { LayoutDashboard, Leaf, ShoppingBag, Tags, Settings, ExternalLink, LogOut, ImageIcon } from 'lucide-react';
 
 const navigation = [
   { name: 'Tableau de bord', href: '/admin/dashboard', icon: LayoutDashboard },
   { name: 'Produits', href: '/admin/products', icon: Leaf },
+  { name: 'Portfolio', href: '/admin/portfolio', icon: ImageIcon },
   { name: 'Commandes', href: '/admin/orders', icon: ShoppingBag },
   { name: 'Catégories', href: '/admin/categories', icon: Tags },
   { name: 'Paramètres', href: '/admin/settings', icon: Settings },

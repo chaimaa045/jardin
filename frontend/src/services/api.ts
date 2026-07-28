@@ -176,4 +176,32 @@ export const settingsApi = {
     apiFetch<any>('/api/settings', { method: 'PUT', data }),
 };
 
+// ============================================================
+// API Publique & Admin — Portfolio
+// ============================================================
+import { PortfolioProject, PortfolioCategory, PortfolioProjectFormData, PortfolioCategoryFormData } from '@/types/portfolio';
+
+export const portfolioApi = {
+  getCategories: () => apiFetch<PortfolioCategory[]>('/api/portfolio/categories'),
+  getProjects: () => apiFetch<PortfolioProject[]>('/api/portfolio/projects'),
+  getProjectsByCategory: (categoryId: number) => apiFetch<PortfolioProject[]>(`/api/portfolio/projects/category/${categoryId}`),
+  getProjectById: (id: number) => apiFetch<PortfolioProject>(`/api/portfolio/projects/${id}`),
+};
+
+export const adminPortfolioApi = {
+  createCategory: (data: PortfolioCategoryFormData) =>
+    apiFetch<PortfolioCategory>('/api/admin/portfolio/categories', { method: 'POST', data }),
+  updateCategory: (id: number, data: PortfolioCategoryFormData) =>
+    apiFetch<PortfolioCategory>(`/api/admin/portfolio/categories/${id}`, { method: 'PUT', data }),
+  deleteCategory: (id: number) =>
+    apiFetch<void>(`/api/admin/portfolio/categories/${id}`, { method: 'DELETE' }),
+
+  createProject: (data: PortfolioProjectFormData) =>
+    apiFetch<PortfolioProject>('/api/admin/portfolio/projects', { method: 'POST', data }),
+  updateProject: (id: number, data: PortfolioProjectFormData) =>
+    apiFetch<PortfolioProject>(`/api/admin/portfolio/projects/${id}`, { method: 'PUT', data }),
+  deleteProject: (id: number) =>
+    apiFetch<void>(`/api/admin/portfolio/projects/${id}`, { method: 'DELETE' }),
+};
+
 export default apiFetch;

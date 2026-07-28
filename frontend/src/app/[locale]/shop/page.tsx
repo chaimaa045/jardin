@@ -40,8 +40,8 @@ export default function ShopPage() {
   // 3. Application des filtres multiples
   const filteredProducts = products.filter(p => {
     const matchCategory = activeCategoryId === 'ALL' || p.category?.id === activeCategoryId;
-    const matchSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                        (p.description && p.description.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (p.description && p.description.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchPrice = p.price <= priceRange;
     return matchCategory && matchSearch && matchPrice;
   });
@@ -60,19 +60,19 @@ export default function ShopPage() {
       {!isLoading && (
         <div className="max-w-4xl mx-auto mb-12 space-y-6">
           <div className="flex flex-col md:flex-row gap-4">
-            <input 
-              type="text" 
-              placeholder="Rechercher un produit..." 
+            <input
+              type="text"
+              placeholder="Rechercher un produit..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="flex-1 bg-white border border-[#e5dfd5] text-primary rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary shadow-sm"
             />
             <div className="flex flex-col flex-1 bg-white border border-[#e5dfd5] rounded-xl px-4 py-2 shadow-sm">
               <label className="text-xs text-primary/70 font-semibold mb-1">Prix maximum : {priceRange} DH</label>
-              <input 
-                type="range" 
-                min="0" 
-                max={maxAvailablePrice} 
+              <input
+                type="range"
+                min="0"
+                max={maxAvailablePrice}
                 step="10"
                 value={priceRange}
                 onChange={(e) => setPriceRange(Number(e.target.value))}
@@ -80,33 +80,33 @@ export default function ShopPage() {
               />
             </div>
           </div>
-          
+
           {categories.length > 0 && (
             <div className="flex flex-wrap justify-center gap-3">
-          <button
-            onClick={() => setActiveCategoryId('ALL')}
-            className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ease-in-out focus:outline-none ${activeCategoryId === 'ALL'
-              ? "bg-secondary text-white shadow-md shadow-secondary/20 border border-secondary"
-              : "bg-white text-primary hover:bg-surface border border-[#e5dfd5]"
-              }`}
-          >
-            Toutes les catégories
-          </button>
+              <button
+                onClick={() => setActiveCategoryId('ALL')}
+                className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ease-in-out focus:outline-none ${activeCategoryId === 'ALL'
+                  ? "bg-secondary text-white shadow-md shadow-secondary/20 border border-secondary"
+                  : "bg-white text-primary hover:bg-surface border border-[#e5dfd5]"
+                  }`}
+              >
+                Toutes les catégories
+              </button>
 
-          {categories.map(category => (
-            <button
-              key={category.id}
-              onClick={() => setActiveCategoryId(category.id)}
-              className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ease-in-out focus:outline-none ${activeCategoryId === category.id
-                ? "bg-secondary text-white shadow-md shadow-secondary/20 border border-secondary"
-                : "bg-white text-primary hover:bg-surface border border-[#e5dfd5]"
-                }`}
-            >
-              {category.name}
-            </button>
-          ))}
-        </div>
-      )}
+              {categories.map(category => (
+                <button
+                  key={category.id}
+                  onClick={() => setActiveCategoryId(category.id)}
+                  className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ease-in-out focus:outline-none ${activeCategoryId === category.id
+                    ? "bg-secondary text-white shadow-md shadow-secondary/20 border border-secondary"
+                    : "bg-white text-primary hover:bg-surface border border-[#e5dfd5]"
+                    }`}
+                >
+                  {category.name}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
@@ -121,12 +121,13 @@ export default function ShopPage() {
         </div>
       ) : (
         /* Grille des produits filtrés */
-        <MotionStaggerGrid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10">
+        <MotionStaggerGrid key={filteredProducts.length + searchTerm + activeCategoryId + priceRange} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10">
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </MotionStaggerGrid>
       )}
     </div>
+
   );
 }
