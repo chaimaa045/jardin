@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { adminPortfolioApi, portfolioApi } from '@/services/api';
+import { adminPortfolioApi, portfolioApi, uploadApi } from '@/services/api';
 import type { PortfolioProject, PortfolioCategory, PortfolioProjectFormData } from '@/types/portfolio';
 import { Save, ArrowLeft, Loader2, UploadCloud, X, Settings } from 'lucide-react';
 import Link from 'next/link';
@@ -54,16 +54,7 @@ export function PortfolioForm({ initialData, isEdit }: PortfolioFormProps) {
       if (!isGallery) {
         // Upload cover image
         const file = files[0];
-        const formDataUpload = new FormData();
-        formDataUpload.append('file', file);
-        
-        const res = await fetch('/api/admin/upload', {
-          method: 'POST',
-          body: formDataUpload,
-        });
-        
-        if (!res.ok) throw new Error('Erreur lors de l\'upload');
-        const data = await res.json();
+        const data = await uploadApi.uploadFile(file);
         
         setFormData(prev => ({ ...prev, coverImage: data.url }));
         toast.success('Image ajoutée', { id: toastId });
@@ -72,16 +63,7 @@ export function PortfolioForm({ initialData, isEdit }: PortfolioFormProps) {
         const uploadedUrls: string[] = [];
         for (let i = 0; i < files.length; i++) {
           const file = files[i];
-          const formDataUpload = new FormData();
-          formDataUpload.append('file', file);
-          
-          const res = await fetch('/api/admin/upload', {
-            method: 'POST',
-            body: formDataUpload,
-          });
-          
-          if (!res.ok) throw new Error('Erreur lors de l\'upload');
-          const data = await res.json();
+          const data = await uploadApi.uploadFile(file);
           uploadedUrls.push(data.url);
         }
         
