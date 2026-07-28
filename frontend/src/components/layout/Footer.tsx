@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Link from "next/link";
-import { Leaf, MapPin, Phone, Mail, Clock, Facebook, Instagram } from "lucide-react";
+import { Leaf, MapPin, Phone, Mail, Clock } from "lucide-react";
+import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { clientProfile } from '@/data/profile';
 import { useTranslations } from 'next-intl';
 import { settingsApi } from '@/services/api';
@@ -37,12 +38,12 @@ export function Footer() {
             <div className="flex gap-4">
               {settings?.facebookUrl && (
                 <a href={settings.facebookUrl} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary hover:text-white transition-colors">
-                  <Facebook className="w-5 h-5" />
+                  <FaFacebook className="w-5 h-5" />
                 </a>
               )}
               {settings?.instagramUrl && (
                 <a href={settings.instagramUrl} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary hover:text-white transition-colors">
-                  <Instagram className="w-5 h-5" />
+                  <FaInstagram className="w-5 h-5" />
                 </a>
               )}
             </div>
