@@ -158,8 +158,6 @@ export default function AdminOrdersPage() {
 
                     <a 
                       href={`/admin/orders/${order.id}/print`}
-                      target="_blank"
-                      rel="noopener noreferrer"
                       className={`inline-flex p-2.5 rounded-xl transition-colors border ${order.status === 'ACCEPTEE' ? 'bg-secondary text-white border-secondary hover:bg-secondary/90' : 'bg-surface hover:bg-[#e5dfd5] border-[#e5dfd5] text-primary'}`}
                       title="Imprimer le reçu de livraison"
                     >
