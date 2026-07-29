@@ -9,22 +9,24 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.model.SiteSettings;
+
 @Service
 @RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender mailSender;
+    private final SiteSettingsService siteSettingsService;
 
-    @Value("${admin.username}")
-    private String adminUsername; // Si on utilise l'username comme destinataire (ex: email)
-    
-    // On récupère plutôt une adresse dédiée, ou on envoie à SMTP_USERNAME par défaut
-    @Value("${spring.mail.username}")
-    private String adminEmail;
+    @Value("${spring.mail.properties.mail.from:onboarding@resend.dev}")
+    private String mailFrom;
 
     @Override
     public void sendNewOrderEmail(Order order) {
-        if (adminEmail == null || adminEmail.isEmpty() || adminEmail.equals("votre.email@gmail.com")) {
+        SiteSettings settings = siteSettingsService.getSettings();
+        String adminDest = settings.getEmail();
+
+        if (adminDest == null || adminDest.isEmpty() || adminDest.equals("votre.email@gmail.com")) {
             System.out.println("Email non configuré. Commande #" + order.getId() + " reçue mais non notifiée par email.");
             return;
         }
@@ -33,8 +35,8 @@ public class EmailServiceImpl implements EmailService {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-            helper.setFrom(adminEmail);
-            helper.setTo(adminEmail);
+            helper.setFrom(mailFrom);
+            helper.setTo(adminDest);
             helper.setSubject("🌿 Souss Garden - Nouvelle Commande #" + order.getId());
 
             String htmlContent = "<h2>Nouvelle commande reçue !</h2>"
@@ -64,7 +66,7 @@ public class EmailServiceImpl implements EmailService {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-            helper.setFrom(adminEmail);
+            helper.setFrom(mailFrom);
             helper.setTo(order.getCustomerEmail());
             helper.setSubject("🌿 Souss Garden - Confirmation de votre commande #" + order.getId());
 
