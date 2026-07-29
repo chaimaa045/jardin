@@ -29,13 +29,7 @@ export default function OrderPrintPage() {
     fetchOrder();
   }, [params.id]);
 
-  useEffect(() => {
-    if (order) {
-      setTimeout(() => {
-        window.print();
-      }, 500);
-    }
-  }, [order]);
+
 
   if (isLoading) {
     return (
