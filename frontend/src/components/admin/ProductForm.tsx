@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState, useRef } from 'react';
-import { AdminSidebar } from '@/components/admin/AdminSidebar';
+import { AdminPageLayout } from '@/components/admin/AdminPageLayout';
 import { adminProductApi, categoryApi, uploadApi } from '@/services/api';
 import type { AdminProduct, ProductFormData, Category } from '@/types/admin';
 import { useRouter } from 'next/navigation';
@@ -321,9 +321,8 @@ function ProductFormContent({ productId }: ProductFormPageProps) {
 
 export function NewProductPage() {
   return (
-    <div className="flex min-h-screen bg-background">
-      <AdminSidebar />
-      <main className="flex-1 p-8 overflow-auto">
+    <AdminPageLayout>
+      <div className="p-4 lg:p-8 overflow-auto">
         <div className="mb-8">
           <Link href="/admin/products" className="text-primary/50 hover:text-primary font-medium text-sm flex items-center gap-2 mb-4 transition-colors">
             <ArrowLeft className="w-4 h-4" /> Retour au catalogue
@@ -334,16 +333,15 @@ export function NewProductPage() {
         <div className="bg-white border border-[#e5dfd5] shadow-sm rounded-2xl p-8">
           <ProductFormContent />
         </div>
-      </main>
-    </div>
+      </div>
+    </AdminPageLayout>
   );
 }
 
 export function EditProductPage({ id }: { id: number }) {
   return (
-    <div className="flex min-h-screen bg-background">
-      <AdminSidebar />
-      <main className="flex-1 p-8 overflow-auto">
+    <AdminPageLayout>
+      <div className="p-4 lg:p-8 overflow-auto">
         <div className="mb-8">
           <Link href="/admin/products" className="text-primary/50 hover:text-primary font-medium text-sm flex items-center gap-2 mb-4 transition-colors">
             <ArrowLeft className="w-4 h-4" /> Retour au catalogue
@@ -353,7 +351,7 @@ export function EditProductPage({ id }: { id: number }) {
         <div className="bg-white border border-[#e5dfd5] shadow-sm rounded-2xl p-8">
           <ProductFormContent productId={id} />
         </div>
-      </main>
-    </div>
+      </div>
+    </AdminPageLayout>
   );
 }

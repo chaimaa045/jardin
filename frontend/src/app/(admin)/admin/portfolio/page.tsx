@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { AdminSidebar } from '@/components/admin/AdminSidebar';
+import { AdminPageLayout } from '@/components/admin/AdminPageLayout';
 import { portfolioApi, adminPortfolioApi } from '@/services/api';
 import type { PortfolioProject } from '@/types/portfolio';
 import Link from 'next/link';
@@ -51,10 +51,8 @@ export default function AdminPortfolioPage() {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      <AdminSidebar />
-
-      <main className="flex-1 p-8 overflow-y-auto">
+    <AdminPageLayout>
+      <div className="p-4 lg:p-8">
         {/* En-tête */}
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -177,7 +175,7 @@ export default function AdminPortfolioPage() {
             </div>
           )}
         </div>
-      </main>
-    </div>
+      </div>
+    </AdminPageLayout>
   );
 }

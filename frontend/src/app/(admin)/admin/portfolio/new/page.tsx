@@ -1,14 +1,13 @@
 'use client';
-import { AdminSidebar } from '@/components/admin/AdminSidebar';
+import { AdminPageLayout } from '@/components/admin/AdminPageLayout';
 import { PortfolioForm } from '@/components/admin/PortfolioForm';
 
 export default function NewPortfolioProjectPage() {
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      <AdminSidebar />
-      <main className="flex-1 p-8 overflow-y-auto">
+    <AdminPageLayout>
+      <div className="p-4 lg:p-8">
         <PortfolioForm isEdit={false} />
-      </main>
-    </div>
+      </div>
+    </AdminPageLayout>
   );
 }

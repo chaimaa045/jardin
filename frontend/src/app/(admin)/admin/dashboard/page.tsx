@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { AdminSidebar } from '@/components/admin/AdminSidebar';
+import { AdminPageLayout } from '@/components/admin/AdminPageLayout';
 import { adminProductApi, orderApi } from '@/services/api';
 import type { AdminProduct, Order } from '@/types/admin';
 import Link from 'next/link';
@@ -180,10 +180,8 @@ export default function AdminDashboardPage() {
   const statusData = getStatusData();
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#FDFCFB]">
-      <AdminSidebar />
-
-      <main className="flex-1 p-8 lg:p-12 overflow-y-auto">
+    <AdminPageLayout>
+      <div className="p-4 lg:p-8">
         {/* En-tête */}
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
@@ -433,7 +431,7 @@ export default function AdminDashboardPage() {
             )}
           </motion.div>
         </div>
-      </main>
-    </div>
+      </div>
+    </AdminPageLayout>
   );
 }

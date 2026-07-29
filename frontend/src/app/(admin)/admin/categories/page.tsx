@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { AdminSidebar } from '@/components/admin/AdminSidebar';
+import { AdminPageLayout } from '@/components/admin/AdminPageLayout';
 import { categoryApi } from '@/services/api';
 import type { Category } from '@/types/admin';
 import { Plus, Edit2, Trash2, CheckCircle, XCircle, AlertCircle, Loader2 } from 'lucide-react';
@@ -88,10 +88,8 @@ export default function AdminCategoriesPage() {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      <AdminSidebar />
-
-      <main className="flex-1 p-8 overflow-y-auto relative">
+    <AdminPageLayout>
+      <div className="p-4 lg:p-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-primary font-serif">Catégories</h1>
           <p className="text-primary/60 mt-2">Gérez les catégories de vos produits</p>
@@ -226,7 +224,7 @@ export default function AdminCategoriesPage() {
             </div>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </AdminPageLayout>
   );
 }

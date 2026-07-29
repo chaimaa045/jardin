@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { AdminSidebar } from '@/components/admin/AdminSidebar';
+import { AdminPageLayout } from '@/components/admin/AdminPageLayout';
 import { orderApi } from '@/services/api';
 import type { Order } from '@/types/admin';
 import { Loader2, ShoppingBag, User, Phone, MapPin, Eye, AlertCircle, ChevronDown, Package, Trash2, Printer } from 'lucide-react';
@@ -88,10 +88,8 @@ export default function AdminOrdersPage() {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      <AdminSidebar />
-
-      <main className="flex-1 p-8 overflow-y-auto">
+    <AdminPageLayout>
+      <div className="p-4 lg:p-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-primary font-serif">Commandes</h1>
           <p className="text-primary/60 mt-2">Gérez les commandes de vos clients</p>

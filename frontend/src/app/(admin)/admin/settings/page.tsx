@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { AdminSidebar } from '@/components/admin/AdminSidebar';
+import { AdminPageLayout } from '@/components/admin/AdminPageLayout';
 import { useAuth } from '@/hooks/useAuth';
 import { Shield, Key, CheckCircle, AlertCircle, Loader2, Lock, Eye, EyeOff, Settings } from 'lucide-react';
 import { authApi, settingsApi } from '@/services/api';
@@ -93,9 +93,8 @@ export default function AdminSettingsPage() {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      <AdminSidebar />
-      <main className="flex-1 p-8 overflow-y-auto">
+    <AdminPageLayout>
+      <div className="p-4 lg:p-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-primary font-serif">Paramètres</h1>
           <p className="text-primary/60 mt-2">Informations du compte et configuration</p>
@@ -360,7 +359,7 @@ export default function AdminSettingsPage() {
           </div>
 
         </div>
-      </main>
-    </div>
+      </div>
+    </AdminPageLayout>
   );
 }

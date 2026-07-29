@@ -13,12 +13,12 @@ const navigation = [
   { name: 'Paramètres', href: '/admin/settings', icon: Settings },
 ];
 
-export function AdminSidebar() {
+export function AdminSidebar({ onNavigate, isMobile }: { onNavigate?: () => void, isMobile?: boolean }) {
   const pathname = usePathname();
   const { user, logout } = useAuth();
 
   return (
-    <aside className="w-64 bg-surface border-r border-[#e5dfd5] flex flex-col h-screen sticky top-0">
+    <aside className={`w-64 bg-surface flex flex-col h-full ${isMobile ? '' : 'border-r border-[#e5dfd5] sticky top-0 h-screen'}`}>
       {/* Logo */}
       <div className="p-6 border-b border-[#e5dfd5]">
         <div className="flex items-center gap-3">
@@ -41,6 +41,7 @@ export function AdminSidebar() {
             <Link
               key={item.href}
               href={item.href}
+              onClick={onNavigate}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                 isActive
                   ? 'bg-secondary text-white shadow-md shadow-secondary/20'
