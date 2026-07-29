@@ -258,7 +258,7 @@ export default function AdminOrdersPage() {
             ))
           )}
         </div>
-      </main>
+      </div>
 
       {/* Modal de Confirmation */}
       {confirmModal.isOpen && (
@@ -326,6 +326,6 @@ export default function AdminOrdersPage() {
           </div>
         </div>
       )}
-    </div>
+    </AdminPageLayout>
   );
 }
