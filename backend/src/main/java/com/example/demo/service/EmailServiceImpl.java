@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.SiteSettings;
@@ -21,6 +22,7 @@ public class EmailServiceImpl implements EmailService {
     @Value("${spring.mail.properties.mail.from:onboarding@resend.dev}")
     private String mailFrom;
 
+    @Async
     @Override
     public void sendNewOrderEmail(Order order) {
         SiteSettings settings = siteSettingsService.getSettings();
@@ -55,6 +57,7 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
+    @Async
     @Override
     public void sendCustomerConfirmationEmail(Order order) {
         if (order.getCustomerEmail() == null || order.getCustomerEmail().isEmpty()) {
